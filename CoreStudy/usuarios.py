@@ -1,18 +1,21 @@
 
-def cadastrarUsuario():
+def cadastrar_usuario():
     print('------ CADASTRO ------')
     nome = input('Digite seu nome completo: ')
     email = input('Digite seu email: ')
     senha = input('Digite sua senha: ')
-    senha = input('Digite sua senha novamente: ')
-    print('Usuário cadastrado com sucesso!')
+    confirmacao_senha = input('Digite sua senha novamente: ')
+    if senha == confirmacao_senha:
+        print('Usuário cadastrado com sucesso!')
+    else:
+        print('Senhas não são iguais! Tente novamente.')
 
-cadastrarUsuario()
+cadastrar_usuario()
 
-def logarUsuario():
+def logar_usuario():
     print('------ LOGIN ------')
     email = input('Digite seu email: ')
     senha = input('Digite sua senha: ')
-    print('Login realizado com sucesso com sucesso!')
+    print('Login realizado com sucesso!')
 
-logarUsuario()
+logar_usuario()
