@@ -53,7 +53,7 @@ def criar_tabelas():
         carga_hora_curso INT NOT NULL,
         fk_tbl_categoria_id_categoria INT NOT NULL,
 
-        CONSTRAINT FK_tbl_cursos_categoria
+        CONSTRAINT fk_tbl_cursos_categoria
             FOREIGN KEY (fk_tbl_categoria_id_categoria)
             REFERENCES tbl_categoria(id_categoria)
             ON DELETE RESTRICT
@@ -66,7 +66,7 @@ def criar_tabelas():
         titulo_modulo VARCHAR(100) NOT NULL,
         fk_tbl_cursos_id_curso INT NOT NULL,
 
-        CONSTRAINT FK_tbl_modulos_cursos
+        CONSTRAINT fk_tbl_modulos_cursos
             FOREIGN KEY (fk_tbl_cursos_id_curso)
             REFERENCES tbl_cursos(id_curso)
             ON DELETE RESTRICT
@@ -80,7 +80,7 @@ def criar_tabelas():
         url_arqui_aula VARCHAR(2000) NOT NULL,
         fk_tbl_modulos_id_modulo INT NOT NULL,
 
-        CONSTRAINT FK_tbl_aulas_modulos
+        CONSTRAINT fk_tbl_aulas_modulos
             FOREIGN KEY (fk_tbl_modulos_id_modulo)
             REFERENCES tbl_modulos(id_modulo)
             ON DELETE RESTRICT
@@ -95,7 +95,7 @@ def criar_tabelas():
         tam_arqu_material VARCHAR(200),
         fk_tbl_aulas_id_aula INT NOT NULL,
 
-        CONSTRAINT FK_tbl_materiais_aulas
+        CONSTRAINT fk_tbl_materiais_aulas
             FOREIGN KEY (fk_tbl_aulas_id_aula)
             REFERENCES tbl_aulas(id_aula)
             ON DELETE CASCADE
