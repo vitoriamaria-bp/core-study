@@ -45,6 +45,7 @@ def submenu_cursos():
         print("2 - Listar Cursos (Visão Geral)")
         print("3 - Editar Curso")
         print("4 - Excluir Curso")
+        print("5 - Buscar Curso")
         print("----------------------------------------")
         print("0 - Voltar")
         print("========================================")
@@ -53,13 +54,14 @@ def submenu_cursos():
         elif op == "2": listar_cursos()
         elif op == "3": editar_curso()
         elif op == "4": excluir_curso()
+        elif op == "5": buscar_curso()
         elif op == "0": break
         else: print("Opção inválida.")
 
 def submenu_modulos():
     while True:
         print("\n========================================")
-        print("           GERENCIAR MÓDULOS            ")
+        print("          GERENCIAR MÓDULOS             ")
         print("========================================")
         print("1 - Adicionar Módulo")
         print("2 - Listar Módulos")
@@ -147,7 +149,8 @@ def menu_aluno(id_u, nome):
         print(f"       ÁREA DO ALUNO: {nome}            ")
         print("========================================")
         print("1 - Catálogo de Cursos")
-        print("2 - Gerenciar Perfil")
+        print("2 - Buscar Curso")
+        print("3 - Gerenciar Perfil")
         print("----------------------------------------")
         print("0 - Fazer Logout")
         print("========================================")
@@ -156,6 +159,8 @@ def menu_aluno(id_u, nome):
         if op == "1": 
             trilha_do_aluno()
         elif op == "2":
+            buscar_curso()
+        elif op == "3":
             while True:
                 print("\n========================================")
                 print("           GERENCIAR PERFIL             ")
