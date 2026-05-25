@@ -1,5 +1,5 @@
-/*create database db_core_study1;
-use db_core_study1*/
+CREATEE DATABASE db_core_study1;
+USE db_core_study1;
 
 
 CREATE TABLE tbl_usuarios (
@@ -24,7 +24,7 @@ CREATE TABLE tbl_cursos (
     carga_hora_curso INT NOT NULL,
     fk_tbl_categoria_id_categoria INT NOT NULL,
     
-    CONSTRAINT FK_tbl_cursos_categoria
+    CONSTRAINT fk_tbl_cursos_categoria
 	FOREIGN KEY (fk_tbl_categoria_id_categoria)
 	REFERENCES tbl_categoria(id_categoria)
 	ON DELETE RESTRICT
@@ -35,7 +35,7 @@ CREATE TABLE tbl_modulos (
     titulo_modulo VARCHAR (100) NOT NULL,
     fk_tbl_cursos_id_curso INT NOT NULL,
     
-    CONSTRAINT FK_tbl_modulos_cursos
+    CONSTRAINT fk_tbl_modulos_cursos
 	FOREIGN KEY (fk_tbl_cursos_id_curso)
 	REFERENCES tbl_cursos(id_curso)
 	ON DELETE RESTRICT
@@ -47,7 +47,7 @@ CREATE TABLE tbl_aulas (
     url_arqui_aula VARCHAR (2000) NOT NULL,
     fk_tbl_modulos_id_modulo INT NOT NULL,
     
-    CONSTRAINT FK_tbl_aulas_modulos
+    CONSTRAINT fk_tbl_aulas_modulos
 	FOREIGN KEY (fk_tbl_modulos_id_modulo)
 	REFERENCES tbl_modulos(id_modulo)
 	ON DELETE RESTRICT
@@ -60,7 +60,7 @@ CREATE TABLE tbl_materiais (
     tam_arqu_material VARCHAR (200),
     fk_tbl_aulas_id_aula INT NOT NULL,
     
-    CONSTRAINT FK_tbl_materiais_aulas
+    CONSTRAINT fk_tbl_materiais_aulas
 	FOREIGN KEY (fk_tbl_aulas_id_aula)
 	REFERENCES tbl_aulas(id_aula)
 	ON DELETE CASCADE
@@ -72,14 +72,13 @@ CREATE TABLE usu_cur (
     
     PRIMARY KEY (fk_tbl_usuarios_id_usuario, fk_tbl_cursos_id_curso),
 
-    CONSTRAINT FK_usu_cur_usuarios
+    CONSTRAINT fk_usu_cur_usuarios
 	FOREIGN KEY (fk_tbl_usuarios_id_usuario)
 	REFERENCES tbl_usuarios(id_usuario)
 	ON DELETE CASCADE,
 
-    CONSTRAINT FK_usu_cur_cursos
+    CONSTRAINT fk_usu_cur_cursos
 	FOREIGN KEY (fk_tbl_cursos_id_curso)
 	REFERENCES tbl_cursos(id_curso)
 	ON DELETE CASCADE
 );
- 
