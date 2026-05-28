@@ -42,7 +42,7 @@ CREATE TABLE tbl_modulos (
 );
 
 CREATE TABLE tbl_aulas (
-    id_aula INT AUTO_INCREMENT KEY,
+    id_aula INT AUTO_INCREMENT PRIMARY KEY,
     titulo_aula VARCHAR (200) NOT NULL,
     url_arqui_aula VARCHAR (2000) NOT NULL,
     fk_tbl_modulos_id_modulo INT NOT NULL,
