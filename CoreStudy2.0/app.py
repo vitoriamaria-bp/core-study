@@ -414,7 +414,12 @@ def cadastro():
         cursor.close()
         conexao.close()
 
-        return render_template("cadastro_sucesso.html")
+        return render_template(
+            "sucesso.html",
+            titulo="Cadastro realizado!",
+            mensagem="Usuario cadastrado com sucesso. Agora voce ja pode fazer login.",
+            voltar="/login"
+        )
 
     return render_template("cadastro.html")
 
@@ -498,7 +503,12 @@ def adicionar_usuario_admin():
         cursor.close()
         conexao.close()
 
-        return redirect("/admin/usuarios")
+        return render_template(
+            "sucesso.html",
+            titulo="Sucesso!",
+            mensagem="Usuario cadastrado com sucesso.",
+            voltar="/admin/usuarios"
+        )
 
     return render_template("adicionar_usuario.html")
 
@@ -558,7 +568,12 @@ def editar_usuario_admin(id_usuario):
         cursor.close()
         conexao.close()
 
-        return redirect("/admin/usuarios")
+        return render_template(
+            "sucesso.html",
+            titulo="Sucesso!",
+            mensagem="Usuario atualizado com sucesso.",
+            voltar="/admin/usuarios"
+        )
 
     sql = """
     SELECT id_usuario,
@@ -602,7 +617,12 @@ def excluir_usuario_admin(id_usuario):
         cursor.close()
         conexao.close()
 
-        return redirect("/admin/usuarios")
+        return render_template(
+            "sucesso.html",
+            titulo="Sucesso!",
+            mensagem="Usuario excluido com sucesso.",
+            voltar="/admin/usuarios"
+        )
 
     sql = """
     SELECT id_usuario, nome_usuario
@@ -912,6 +932,7 @@ def categorias():
     sql = """
     SELECT id_categoria, nome_categoria
     FROM tbl_categoria
+    ORDER BY id_categoria DESC
     """
 
     cursor.execute(sql)

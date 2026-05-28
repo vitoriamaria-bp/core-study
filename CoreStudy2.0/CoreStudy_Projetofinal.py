@@ -2,6 +2,7 @@ import mysql.connector
 from mysql.connector import Error
 from mysql.connector import IntegrityError
 import getpass
+import re
 
 
 def conectar():
@@ -19,6 +20,26 @@ def conectar():
         return None
 
 
+def validar_email(email):
+    """Valida formato básico de email. Retorna True se válido."""
+    if not email:
+        return False
+    # regex simples para validar emails comuns
+    padrao = r'^[^\s@]+@[^\s@]+\.[^\s@]{2,}$'
+    return re.match(padrao, email) is not None
+
+
+def email_em_uso(cursor, email, id_usuario=None):
+    if id_usuario:
+        sql = "SELECT id_usuario FROM tbl_usuarios WHERE email_usuario = %s AND id_usuario <> %s"
+        cursor.execute(sql, (email, id_usuario))
+    else:
+        sql = "SELECT id_usuario FROM tbl_usuarios WHERE email_usuario = %s"
+        cursor.execute(sql, (email,))
+
+    return cursor.fetchone() is not None
+
+
 def criar_tabelas():
     conexao = conectar()
 
@@ -31,7 +52,7 @@ def criar_tabelas():
     CREATE TABLE IF NOT EXISTS tbl_usuarios (
         id_usuario INT AUTO_INCREMENT PRIMARY KEY,
         nome_usuario VARCHAR(200) NOT NULL,
-        email_usuario VARCHAR(200) NOT NULL,
+        email_usuario VARCHAR(200) NOT NULL UNIQUE,
         telefone_usuario VARCHAR(50) NOT NULL,
         dt_nasc_usuario DATE NOT NULL,
         senha_usuario VARCHAR(100) NOT NULL,
@@ -114,6 +135,10 @@ def adicionar_usuario():
 
     nome = input("Nome do usuário: ")
     email = input("Email: ")
+    email = email.strip()
+    if email.lower() == "admin" or not validar_email(email):
+        print("E-mail inválido! Cadastro cancelado.")
+        return
     telefone = input("Telefone: ")
     dt_nasc = input("Data de nascimento (AAAA-MM-DD): ")
     senha = getpass.getpass("Senha: ")
@@ -124,7 +149,16 @@ def adicionar_usuario():
         return
 
     conexao = conectar()
+    if conexao is None:
+        return
+
     cursor = conexao.cursor()
+
+    if email_em_uso(cursor, email):
+        print("Este e-mail já está cadastrado.")
+        cursor.close()
+        conexao.close()
+        return
 
     sql = """
     INSERT INTO tbl_usuarios
@@ -171,12 +205,26 @@ def atualizar_usuario():
     id_usuario = input("Digite o ID do usuário que deseja atualizar: ")
     nome = input("Novo nome: ")
     email = input("Novo email: ")
+    email = email.strip()
+    if email.lower() == "admin" or not validar_email(email):
+        print("E-mail inválido! Atualização cancelada.")
+        return
+
     telefone = input("Novo telefone: ")
     dt_nasc = input("Nova data de nascimento (AAAA-MM-DD): ")
     senha = getpass.getpass("Nova senha: ")
 
     conexao = conectar()
+    if conexao is None:
+        return
+
     cursor = conexao.cursor()
+
+    if email_em_uso(cursor, email, id_usuario):
+        print("Este e-mail já está cadastrado para outro usuário.")
+        cursor.close()
+        conexao.close()
+        return
 
     sql = """
     UPDATE tbl_usuarios
@@ -232,8 +280,12 @@ def deletar_usuario():
 def logar_sistema():
     
     print("\n====== TELA DE ACESSO ======")
-    email = input("Digite seu email: ")
+    email = input("Digite seu email: ").strip()
     senha = getpass.getpass("Digite sua senha: ")
+
+    if email.lower() != "admin" and not validar_email(email):
+        print("\n[ERRO] E-mail inválido!")
+        return None, None, None
 
     if email == "admin" and senha == "admin":
         return "ADMIN", "Administrador", 0

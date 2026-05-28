@@ -17,10 +17,21 @@
         <input type="text" name="nome" placeholder="Nome" required>
         <br><br>
 
-        <input type="email" name="email" placeholder="Email" required>
+        <input id="email" type="email" name="email" placeholder="Email" required data-email-validation data-email-feedback="email-feedback">
+        <div id="email-feedback" class="field-feedback" aria-live="polite"></div>
         <br><br>
 
-        <input type="text" name="telefone" placeholder="Telefone" required>
+        <div class="phone-row" data-phone-field>
+            <select data-phone-country aria-label="Codigo do pais">
+                <option value="+55">+55 BR</option>
+                <option value="+1">+1 EUA</option>
+                <option value="+351">+351 PT</option>
+                <option value="+34">+34 ES</option>
+                <option value="+44">+44 UK</option>
+            </select>
+            <input type="text" name="telefone_numero" placeholder="(11) 99898-4848" required data-phone-number>
+            <input type="hidden" name="telefone" data-phone-full>
+        </div>
         <br><br>
 
         <input type="date" name="data_nasc" required>
@@ -36,5 +47,7 @@
         <a href="/admin/usuarios">Voltar</a>
     </form>
 
+    <script src="{{ url_for('static', filename='email-validation.js') }}"></script>
+    <script src="{{ url_for('static', filename='phone-format.js') }}"></script>
 </body>
 </html>

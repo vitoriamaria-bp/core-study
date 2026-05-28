@@ -102,6 +102,26 @@ textarea {
     font: inherit;
 }
 
+input.input-valid {
+    border-color: var(--success);
+}
+
+input.input-invalid {
+    border-color: var(--danger);
+}
+
+.field-feedback {
+    min-height: 18px;
+    margin-top: 5px;
+    color: var(--danger);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.input-valid + .field-feedback {
+    color: var(--success);
+}
+
 textarea {
     min-height: 110px;
     resize: vertical;
@@ -280,6 +300,16 @@ td a {
 
 .form-group {
     text-align: left;
+}
+
+.phone-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 8px;
+}
+
+.phone-row select {
+    min-width: 0;
 }
 
 .button-row {
