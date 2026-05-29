@@ -120,8 +120,24 @@ def admin():
 
 @app.route("/aluno")
 def aluno():
-    if "tipo_usuario" not in session or session["tipo_usuario"] != "ALUNO": return redirect("/login")
-    return render_template("aluno.html", nome_usuario=session["nome_usuario"])
+    # CORREÇÃO: Chaves e valores agora batem exatamente com o que foi gravado no /login
+    if "id_usuario" not in session or session.get("tipo_usuario") != "ALUNO":
+        return redirect("/login")
+    
+    conexao = conectar()
+    cursor = conexao.cursor()
+    
+    # CORREÇÃO: Query ajustada para refletir os nomes reais das colunas da tbl_cursos e tbl_categoria
+    cursor.execute('''
+        SELECT c.id_curso, c.titulo_curso, c.fk_tbl_categoria_id_categoria, c.carga_hora_curso, cat.nome_categoria 
+        FROM tbl_cursos c
+        LEFT JOIN tbl_categoria cat ON c.fk_tbl_categoria_id_categoria = cat.id_categoria
+        ORDER BY c.id_curso DESC
+    ''')
+    cursos = cursor.fetchall()
+    conexao.close()
+    
+    return render_template("aluno.html", nome_usuario=session["nome_usuario"], cursos=cursos)
 
 @app.route("/logout")
 def logout():
