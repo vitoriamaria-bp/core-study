@@ -1,92 +1,72 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Usuarios</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
 
-    <main class="page-shell">
-        <header class="page-header">
-            <div class="page-header-text">
-                <h1>Gerenciamento de Usuarios</h1>
-                <p>Consulte e edite os alunos cadastrados.</p>
-            </div>
+{% block title %}Gerenciar Usuários - Core Study{% endblock %}
 
-            <div class="button-row">
-                <a href="/admin/adicionar-usuario">Adicionar usuario</a>
-                <a href="/admin" class="btn-secondary">Voltar</a>
-            </div>
-        </header>
+{% block content %}
+<header class="page-header">
+    <div>
+        <h1>Gerenciamento de Usuários</h1>
+        <p>Consulte, edite ou exclua os alunos cadastrados no sistema.</p>
+    </div>
+    <div>
+        <a href="/admin/adicionar-usuario" class="btn-primary">+ Adicionar Usuário</a>
+    </div>
+</header>
 
-        <section class="search-panel">
-            <div class="search-tools">
-                <div class="search-field">
-                    <label for="buscar-usuarios">Pesquisar usuario</label>
-                    <input
-                        id="buscar-usuarios"
-                        type="search"
-                        placeholder="Digite nome, email ou telefone"
-                        data-search-input="usuarios"
-                    >
-                </div>
+<div class="content-card">
+    
+    <div class="search-panel">
+        <div class="search-field">
+            <input type="text" id="buscar-usuarios" placeholder="Pesquisar por nome ou e-mail..." data-search-input="usuarios">
+        </div>
+    </div>
 
-                <details class="sort-menu">
-                    <summary>Ordenar</summary>
-                    <div class="sort-menu-options">
-                        <button type="button" data-sort-target="usuarios" data-sort-option="latest">Adicionados por ultimo</button>
-                        <button type="button" data-sort-target="usuarios" data-sort-option="alpha">Ordem alfabetica</button>
-                        <button type="button" data-sort-target="usuarios" data-sort-option="oldest">Primeiros adicionados</button>
-                    </div>
-                </details>
-            </div>
-        </section>
-
-        <section class="table-card">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Telefone</th>
-                        <th>Nascimento</th>
-                        <th>Cadastro</th>
-                        <th>Acoes</th>
+    <div class="table-responsive">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Nascimento</th>
+                    <th>Cadastro</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody data-search-target="usuarios">
+                {% for usuario in usuarios %}
+                    <tr data-search-item>
+                        <td>#{{ usuario[0] }}</td>
+                        <td style="font-weight: 500; color: var(--primary-color);">{{ usuario[1] }}</td>
+                        <td>{{ usuario[2] }}</td>
+                        <td>{{ usuario[3] }}</td>
+                        <td>{{ usuario[4].strftime('%d/%m/%Y') }}</td>
+                        <td>{{ usuario[5].strftime('%d/%m/%Y') }}</td>
+                        <td>
+                            <div class="actions">
+                                <a href="/admin/editar-usuario/{{ usuario[0] }}" class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Editar</a>
+                                
+                                <form action="/admin/excluir-usuario/{{ usuario[0] }}" method="POST" onsubmit="return confirm('ATENÇÃO!\nTem certeza que deseja excluir o usuário {{ usuario[1] }}?');">
+                                    <button type="submit" class="btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
-                </thead>
-                <tbody data-search-target="usuarios">
-                    {% for usuario in usuarios %}
-                        <tr data-search-item data-sort-id="{{ usuario[0] }}" data-sort-name="{{ usuario[1] }}">
-                            <td>{{ usuario[0] }}</td>
-                            <td>{{ usuario[1] }}</td>
-                            <td>{{ usuario[2] }}</td>
-                            <td>{{ usuario[3] }}</td>
-                            <td>{{ usuario[4].strftime('%d/%m/%Y') }}</td>
-                            <td>{{ usuario[5].strftime('%d/%m/%Y') }}</td>
-                            <td>
-                                <div class="table-actions">
-                                    <a href="/admin/editar-usuario/{{ usuario[0] }}">Editar</a>
-                                    <a href="/admin/excluir-usuario/{{ usuario[0] }}" class="btn-danger">Excluir</a>
-                                </div>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="7">
-                                <div class="empty-state">
-                                    <strong>Nenhum usuario cadastrado.</strong>
-                                    Use o botão Adicionar usuario para começar.
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </section>
-    </main>
+                {% else %}
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 30px; color: var(--text-light);">
+                            Nenhum usuário encontrado no sistema.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <script src="{{ url_for('static', filename='search.js') }}"></script>
-</body>
-</html>
+</div>
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='search.js') }}"></script>
+{% endblock %}
+{% endblock %}

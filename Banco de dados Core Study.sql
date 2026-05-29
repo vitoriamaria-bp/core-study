@@ -1,4 +1,4 @@
-CREATEE DATABASE db_core_study1;
+CREATE DATABASE db_core_study1;
 USE db_core_study1;
 
 

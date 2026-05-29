@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Painel Admin{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='img/logo_core_study.png') }}" alt="Logo">
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin"><i class="ph ph-gauge"></i> <span>Painel</span></a></li>
+            <li><a href="/admin/usuarios"><i class="ph ph-users"></i> <span>Usuários</span></a></li>
+            <li><a href="/admin/categorias"><i class="ph ph-tag"></i> <span>Categorias</span></a></li>
+            <li><a href="/admin/cursos"><i class="ph ph-books"></i> <span>Cursos</span></a></li>
+            <li><a href="/admin/modulos"><i class="ph ph-squares-four"></i> <span>Módulos</span></a></li>
+            <li><a href="/admin/aulas"><i class="ph ph-video"></i> <span>Aulas</span></a></li>
+            <li><a href="/admin/materiais"><i class="ph ph-folder-open"></i> <span>Materiais</span></a></li>
+            <li style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.08);">
+                <a href="/logout"><i class="ph ph-sign-out"></i> <span>Sair</span></a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-wrapper">
+        <header class="page-header" style="padding: 0; margin-bottom: 25px;">
+            <div class="page-header-left" style="display: flex; align-items: center;">
+                <button id="toggle-sidebar" class="toggle-sidebar-btn">☰</button>
+                <h1 style="font-size: 20px;">{% block header_title %}Painel Administrativo{% endblock %}</h1>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="toast-container">
+                {% for category, message in messages %}
+                    <div class="alert-toast alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

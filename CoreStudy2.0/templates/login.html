@@ -2,35 +2,63 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Core Study</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
-<body class="auth-page home-page">
+<body>
+    <div class="toast-container" id="toast-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert-toast alert-{{ category }}" onclick="this.remove()">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
 
-    <main class="auth-card home-card">
-        <img src="{{ url_for('static', filename='img/logo_core_study.png') }}" alt="Logo Core Study" class="logo">
-        <h1>Login</h1>
-        <p>Acesse sua area de estudos.</p>
+    <div class="auth-wrapper-centered">
+        <main class="auth-card-centered">
+            <img src="{{ url_for('static', filename='img/logo_core_study.png') }}" alt="Logo Core Study" class="logo">
+            
+            <h1>Acesso ao Sistema</h1>
+            <p>Insira as suas credenciais para continuar.</p>
+            
+            <form method="POST">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <div class="input-icon-wrapper">
+                        <i class="ph ph-envelope-simple"></i>
+                        <input id="email" type="text" name="email" placeholder="nome@exemplo.com" required>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 25px;">
+                    <label for="senha">Senha</label>
+                    <div class="input-icon-wrapper">
+                        <i class="ph ph-lock-key"></i>
+                        <input id="senha" type="password" name="senha" placeholder="••••••••" required>
+                    </div>
+                </div>
+                
+                <div class="btn-block">
+                    <button type="submit">Login</button>
+                    <a href="/" class="btn-secondary">Voltar ao Início</a>
+                </div>
+            </form>
+        </main>
+    </div>
 
-        <form method="POST">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input id="email" type="text" name="email" placeholder="Digite seu email" required inputmode="email" autocomplete="email" data-email-validation data-email-feedback="email-feedback" data-allow-admin="true">
-                <div id="email-feedback" class="field-feedback" aria-live="polite"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="senha">Senha</label>
-                <input id="senha" type="password" name="senha" placeholder="Digite sua senha" required>
-            </div>
-
-            <div class="button-row">
-                <button type="submit">Entrar</button>
-                <a href="/" class="btn-secondary">Voltar</a>
-            </div>
-        </form>
-    </main>
-
-    <script src="{{ url_for('static', filename='email-validation.js') }}"></script>
+    <div class="unifecaf-corner">
+        <span>Recomendamos</span>
+        <a href="https://www.unifecaf.com.br" target="_blank" title="Visitar site da UniFECAF">
+            <img src="{{ url_for('static', filename='img/unifecaf_logo.png') }}" alt="Logo UniFECAF">
+        </a>
+    </div>
+    
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

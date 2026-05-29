@@ -1,44 +1,42 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Painel Administrativo</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+{% extends "base.html" %}
 
-<body class="admin-page">
+{% block title %}Painel Admin{% endblock %}
 
-    <header class="admin-header">
-        <div class="admin-info">
-            <img
-                src="{{ url_for('static', filename='img/logo_core_study.png') }}"
-                alt="Logo Core Study"
-                class="admin-logo"
-            >
+{% block content %}
+<div class="dashboard-header">
+    <h1>Bem-vindo, {{ nome_usuario }}</h1>
+    <p>Utilize os cards abaixo para navegar pelas ferramentas de gestão da plataforma.</p>
+</div>
 
-            <div class="admin-title">
-                <h1>Painel Administrativo</h1>
-                <p>Bem-vindo administrador!</p>
-            </div>
-        </div>
+<div class="dashboard-grid">
+    <div class="dash-card">
+        <h3>👥 Usuários</h3>
+        <p>Gerencie as contas de alunos e administradores, cadastre novos perfis e controle acessos.</p>
+        <a href="/admin/usuarios" class="btn-primary">Gerenciar</a>
+    </div>
 
-        <a href="/logout" class="logout-btn admin-logout">Fazer Logout</a>
-    </header>
+    <div class="dash-card">
+        <h3>📚 Cursos</h3>
+        <p>Crie novos cursos, defina cargas horárias e agrupe-os em categorias.</p>
+        <a href="/admin/cursos" class="btn-primary">Gerenciar</a>
+    </div>
 
-    <main class="admin-dashboard">
-        <section class="admin-card admin-hero-card">
-            <p class="admin-card-intro">Escolha uma área para administrar:</p>
+    <div class="dash-card">
+        <h3>🧩 Módulos</h3>
+        <p>Estruture o conteúdo programático dividindo os cursos em módulos.</p>
+        <a href="/admin/modulos" class="btn-primary">Gerenciar</a>
+    </div>
 
-            <div class="admin-buttons">
-                <a href="/admin/cursos"><span>📚</span> Cursos</a>
-                <a href="/admin/categorias"><span>🗂</span> Categorias</a>
-                <a href="/admin/modulos"><span>📖</span> Módulos</a>
-                <a href="/admin/aulas"><span>🎥</span> Aulas</a>
-                <a href="/admin/materiais"><span>📎</span> Materiais</a>
-                <a href="/admin/usuarios"><span>👤</span> Usuários</a>
-            </div>
-        </section>
-    </main>
+    <div class="dash-card">
+        <h3>🎥 Aulas</h3>
+        <p>Adicione o conteúdo principal e links de vídeo dentro dos módulos.</p>
+        <a href="/admin/aulas" class="btn-primary">Gerenciar</a>
+    </div>
 
-</body>
-</html>
+    <div class="dash-card">
+        <h3>📁 Materiais</h3>
+        <p>Faça o upload de arquivos de apoio vinculados diretamente às aulas.</p>
+        <a href="/admin/materiais" class="btn-primary">Gerenciar</a>
+    </div>
+</div>
+{% endblock %}
