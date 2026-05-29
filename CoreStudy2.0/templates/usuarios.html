@@ -2,19 +2,20 @@
 
 {% block title %}Gerenciar Usuários - Core Study{% endblock %}
 
+{% block header_title %}Gerenciamento de Usuários{% endblock %}
+
 {% block content %}
-<header class="page-header">
+<header class="page-header" style="justify-content: space-between; display: flex; align-items: flex-end; margin-bottom: 20px;">
     <div>
-        <h1>Gerenciamento de Usuários</h1>
-        <p>Consulte, edite ou exclua os alunos cadastrados no sistema.</p>
+        <h1 style="font-size: 24px; color: var(--primary-color); font-weight: 700;">Gerenciamento de Usuários</h1>
+        <p style="color: var(--text-light); font-size: 14px;">Consulte, edite ou exclua os alunos cadastrados no sistema.</p>
     </div>
-    <div>
+    <div style="min-width: 180px;">
         <a href="/admin/adicionar-usuario" class="btn-primary">+ Adicionar Usuário</a>
     </div>
 </header>
 
 <div class="content-card">
-    
     <div class="search-panel">
         <div class="search-field">
             <input type="text" id="buscar-usuarios" placeholder="Pesquisar por nome ou e-mail..." data-search-input="usuarios">
@@ -46,7 +47,6 @@
                         <td>
                             <div class="actions">
                                 <a href="/admin/editar-usuario/{{ usuario[0] }}" class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Editar</a>
-                                
                                 <form action="/admin/excluir-usuario/{{ usuario[0] }}" method="POST" onsubmit="return confirm('ATENÇÃO!\nTem certeza que deseja excluir o usuário {{ usuario[1] }}?');">
                                     <button type="submit" class="btn-danger">Excluir</button>
                                 </form>
@@ -63,10 +63,9 @@
             </tbody>
         </table>
     </div>
-
 </div>
+{% endblock %}
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='search.js') }}"></script>
-{% endblock %}
 {% endblock %}

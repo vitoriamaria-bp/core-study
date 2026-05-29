@@ -1,67 +1,66 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Categorias</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
 
-    <main class="page-shell">
-        <header class="page-header">
-            <div class="page-header-text">
-                <h1>Categorias</h1>
-                <p>Gerencie as categorias usadas nos cursos.</p>
-            </div>
+{% block title %}Gerenciar Categorias - Core Study{% endblock %}
 
-            <div class="button-row">
-                <a href="/admin/adicionar-categoria">Adicionar categoria</a>
-                <a href="/admin" class="btn-secondary">Voltar</a>
-            </div>
-        </header>
+{% block header_title %}Gerenciamento de Categorias{% endblock %}
 
-        <section class="search-panel">
-            <div class="search-tools">
-                <div class="search-field">
-                    <label for="buscar-categorias">Pesquisar categoria</label>
-                    <input
-                        id="buscar-categorias"
-                        type="search"
-                        placeholder="Digite o nome da categoria"
-                        data-search-input="categorias"
-                    >
-                </div>
+{% block content %}
+<header class="page-header" style="justify-content: space-between; display: flex; align-items: flex-end; margin-bottom: 20px;">
+    <div>
+        <h1 style="font-size: 24px; color: var(--primary-color); font-weight: 700;">Gerenciamento de Categorias</h1>
+        <p style="color: var(--text-light); font-size: 14px;">Organize os cursos da plataforma criando áreas temáticas.</p>
+    </div>
+    <div style="min-width: 190px;">
+        <a href="/admin/adicionar-categoria" class="btn-primary">+ Adicionar Categoria</a>
+    </div>
+</header>
 
-                <details class="sort-menu">
-                    <summary>Ordenar</summary>
-                    <div class="sort-menu-options">
-                        <button type="button" data-sort-target="categorias" data-sort-option="latest">Adicionadas por ultimo</button>
-                        <button type="button" data-sort-target="categorias" data-sort-option="alpha">Ordem alfabetica</button>
-                        <button type="button" data-sort-target="categorias" data-sort-option="oldest">Primeiras adicionadas</button>
-                    </div>
-                </details>
-            </div>
-        </section>
+<div class="content-card">
+    <div class="search-panel">
+        <div class="search-field">
+            <input type="text" id="buscar-categorias" placeholder="Pesquisar por nome da categoria..." data-search-input="categorias">
+        </div>
+    </div>
 
-        <section class="card-grid" data-search-target="categorias">
-            {% for categoria in categorias %}
-                <article class="item-card" data-search-item data-sort-id="{{ categoria[0] }}" data-sort-name="{{ categoria[1] }}">
-                    <h2>{{ categoria[1] }}</h2>
+    <div class="table-responsive">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">ID</th>
+                    <th style="width: 70%;">Nome da Categoria</th>
+                    <th style="width: 20%;">Ações</th>
+                </tr>
+            </thead>
+            <tbody data-search-target="categorias">
+                {% for categoria in categorias %}
+                    <tr data-search-item>
+                        <td>#{{ categoria[0] }}</td>
+                        <td style="font-weight: 500; color: var(--primary-color);">{{ categoria[1] }}</td>
+                        <td>
+                            <div class="actions">
+                                <a href="/admin/editar-categoria/{{ categoria[0] }}" class="btn-secondary">Editar</a>
+                                
+                                <form action="/admin/excluir-categoria/{{ categoria[0] }}" method="POST" id="form-{{ categoria[0] }}" style="margin: 0;">
+                                    <button type="button" class="btn-primary" onclick="openDeleteModal('form-{{ categoria[0] }}', 'Tem certeza que deseja excluir a categoria {{ categoria[1] }}?')">
+                                        Excluir
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" style="text-align: center; padding: 30px; color: var(--text-light);">
+                            Nenhuma categoria encontrada no sistema.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
 
-                    <div class="item-card-actions">
-                        <a href="/admin/editar-categoria/{{ categoria[0] }}">Editar</a>
-                        <a href="/admin/excluir-categoria/{{ categoria[0] }}" class="btn-danger">Excluir</a>
-                    </div>
-                </article>
-            {% else %}
-                <div class="empty-state">
-                    <strong>Nenhuma categoria cadastrada.</strong>
-                    Use o botão Adicionar categoria para começar.
-                </div>
-            {% endfor %}
-        </section>
-    </main>
-
-    <script src="{{ url_for('static', filename='search.js') }}"></script>
-</body>
-</html>
+{% block scripts %}
+<script src="{{ url_for('static', filename='search.js') }}"></script>
+{% endblock %}

@@ -1,34 +1,45 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Categoria</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body class="form-page">
+{% extends "base.html" %}
 
-    <main class="form-card">
-        <h1>Editar Categoria</h1>
-        <p>Atualize o nome da categoria selecionada.</p>
+{% block title %}Editar Categoria - Core Study{% endblock %}
 
-        <form method="POST">
-            <div class="form-group">
-                <label for="nome_categoria">Nome da categoria</label>
-                <input
-                    id="nome_categoria"
-                    type="text"
-                    name="nome_categoria"
-                    value="{{ categoria[1] }}"
-                    required
-                >
-            </div>
+{% block header_title %}Gerenciamento de Categorias{% endblock %}
 
-            <div class="button-row">
-                <button type="submit">Salvar alteracoes</button>
-                <a href="/admin/categorias" class="btn-secondary">Voltar</a>
-            </div>
-        </form>
-    </main>
+{% block content %}
+<header class="page-header" style="justify-content: space-between; display: flex; align-items: flex-end; margin-bottom: 30px; position: relative;">
+    <div>
+        <h1 style="font-size: 24px; color: var(--primary-color); font-weight: 700;">Editar Categoria</h1>
+        <p style="color: var(--text-light); font-size: 14px;">Modifique o nome da área de conhecimento selecionada.</p>
+    </div>
+    <div>
+        <a href="/admin/categorias" class="btn-secondary" style="width: auto;">← Voltar para Lista</a>
+    </div>
+</header>
 
-</body>
-</html>
+<div class="content-card" style="max-width: 500px; margin: 0 auto; padding: 35px; background-color: rgba(255, 255, 255, 0.95); box-shadow: 0 8px 30px rgba(0,0,0,0.08); border: 1px solid var(--border-color); position: relative;">
+    
+    <form action="/admin/editar-categoria/{{ categoria[0] }}" method="POST">
+        
+        <div class="form-group" style="margin-bottom: 35px;">
+            <label for="nome_categoria" style="display: block; margin-bottom: 25px; font-weight: 600; font-size: 16px; color: var(--text-color);">Nome da Categoria</label>
+            <input type="text" id="nome_categoria" name="nome_categoria" value="{{ categoria[1] }}" required style="width: 100%;">
+        </div>
+
+        <div style="border-top: 1px solid rgba(203, 213, 225, 0.5); padding-top: 20px; display: flex; justify-content: flex-end; gap: 15px;">
+            <a href="/admin/categorias" class="btn-secondary" style="width: auto;">Cancelar</a>
+            <button type="submit" class="btn-primary" style="width: auto;">Salvar Alterações</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Mantém a aba de Categorias ativa no menu lateral
+    document.addEventListener("DOMContentLoaded", function() {
+        let menuCategoria = document.querySelector('.sidebar-menu a[href="/admin/categorias"]');
+        if(menuCategoria) {
+            menuCategoria.classList.add('active');
+        }
+    });
+</script>
+{% endblock %}

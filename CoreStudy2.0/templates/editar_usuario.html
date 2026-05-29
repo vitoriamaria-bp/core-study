@@ -1,74 +1,73 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Usuário</title>
+{% extends "base.html" %}
 
-    <link rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% block title %}Editar Usuário - Core Study{% endblock %}
 
-    <img src="{{ url_for('static', filename='img/logo_core_study.png') }}" alt="Logo Core Study" class="logo">
+{% block header_title %}Gerenciamento de Usuários{% endblock %}
 
-    <h1>Editar Usuário</h1>
-
-    <form method="POST">
-
-    <label>Nome:</label>
-    <br>
-    <input type="text" name="nome" value="{{ usuario[1] }}" required>
-
-    <br><br>
-
-    <label>Email:</label>
-    <br>
-    <input id="email" type="email" name="email" value="{{ usuario[2] }}" required data-email-validation data-email-feedback="email-feedback">
-    <div id="email-feedback" class="field-feedback" aria-live="polite"></div>
-
-    <br><br>
-
-    <label>Telefone:</label>
-    <br>
-    <div class="phone-row" data-phone-field>
-        <select data-phone-country aria-label="Codigo do pais">
-            <option value="+55">+55 BR</option>
-            <option value="+1">+1 EUA</option>
-            <option value="+351">+351 PT</option>
-            <option value="+34">+34 ES</option>
-            <option value="+44">+44 UK</option>
-        </select>
-        <input type="text" name="telefone_numero" placeholder="(11) 99898-4848" required data-phone-number>
-        <input type="hidden" name="telefone" value="{{ usuario[3] }}" data-phone-full>
+{% block content %}
+<header class="page-header" style="justify-content: space-between; display: flex; align-items: flex-end; margin-bottom: 15px;">
+    <div>
+        <h1 style="font-size: 24px; color: var(--primary-color); font-weight: 700;">Editar Usuário</h1>
+        <p style="color: var(--text-light); font-size: 14px;">Atualize os dados do aluno abaixo.</p>
     </div>
+    <div>
+        <a href="/admin/usuarios" class="btn-secondary" style="width: auto;">← Voltar para Lista</a>
+    </div>
+</header>
 
-    <br><br>
+<div class="content-card" style="max-width: 800px; margin: 0 auto; padding: 25px; position: relative; background: linear-gradient(rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)), url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color);">
+    
+    <form action="/admin/editar-usuario/{{ usuario[0] }}" method="POST" style="position: relative; z-index: 1;">
+        
+        <div class="form-group" style="margin-bottom: 12px;">
+            <label for="nome">Nome Completo</label>
+            <input type="text" id="nome" name="nome" value="{{ usuario[1] }}" required>
+        </div>
 
-    <label>Data de nascimento:</label>
-    <br>
-    <input type="date" name="data_nasc" value="{{ usuario[4] }}" required>
+        <div class="form-group" style="margin-bottom: 12px;">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" value="{{ usuario[2] }}" required>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 12px;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="data_nasc">Data de Nascimento</label>
+                <input type="date" id="data_nasc" name="data_nasc" value="{{ usuario[4] }}" required>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="telefone">Telefone</label>
+                <div class="phone-row">
+                    <div class="input-icon-wrapper">
+                        <input type="text" value="+55" readonly style="padding-left: 0 !important; text-align: center; background-color: var(--bg-color); color: var(--text-light); cursor: not-allowed;">
+                    </div>
+                    <div style="flex-grow: 1;">
+                        <input type="text" id="telefone" name="telefone" value="{{ usuario[3] }}" onkeyup="mascaraTelefone(event)" maxlength="15" required style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 25px;">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" value="{{ usuario[5] }}" required>
+        </div>
 
-    <br><br>
+        <div class="btn-block-row" style="justify-content: flex-end; border-top: 1px solid rgba(203, 213, 225, 0.5); padding-top: 20px;">
+            <a href="/admin/usuarios" class="btn-secondary" style="width: auto;">Cancelar</a>
+            <button type="submit" class="btn-primary" style="width: auto;">Salvar Alterações</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
 
-    <label>Senha:</label>
-    <br>
-    <input type="text" name="senha" value="{{ usuario[5] }}" required>
-
-    <br><br>
-
-    <button type="submit">
-        Atualizar
-    </button>
-
-    <br><br>
-
-    <a href="/admin/usuarios">
-        Voltar
-    </a>
-
-</form>
-
-<script src="{{ url_for('static', filename='email-validation.js') }}"></script>
-<script src="{{ url_for('static', filename='phone-format.js') }}"></script>
-</body>
-</html>
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let menuUsuario = document.querySelector('.sidebar-menu a[href="/admin/usuarios"]');
+        if(menuUsuario) {
+            menuUsuario.classList.add('active');
+        }
+    });
+</script>
+{% endblock %}

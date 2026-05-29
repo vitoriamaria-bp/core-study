@@ -2,55 +2,63 @@
 
 {% block title %}Gerenciar Materiais - Core Study{% endblock %}
 
-{% block header %}
-<header class="page-header">
-    <div class="page-header-left" style="display: flex; align-items: center; gap: 15px;">
-        <button id="toggle-sidebar" class="toggle-sidebar-btn" aria-label="Recolher Menu">☰</button>
-        <div>
-            <h1>Gerenciar Materiais</h1>
-            <p>Gerencie os arquivos de apoio das suas aulas.</p>
-        </div>
-    </div>
-    <a href="/admin/adicionar-material" class="btn-primary">+ Novo Material</a>
-</header>
-{% endblock %}
+{% block header_title %}Gerenciamento de Materiais{% endblock %}
 
 {% block content %}
+<header class="page-header" style="justify-content: space-between; display: flex; align-items: flex-end; margin-bottom: 20px;">
+    <div>
+        <h1 style="font-size: 24px; color: var(--primary-color); font-weight: 700;">Gerenciamento de Materiais</h1>
+        <p style="color: var(--text-light); font-size: 14px;">Faça a gestão dos arquivos de apoio e documentos vinculados às aulas.</p>
+    </div>
+    <div style="min-width: 190px;">
+        <a href="/admin/adicionar-material" class="btn-primary">+ Adicionar Material</a>
+    </div>
+</header>
+
 <div class="content-card">
+    <div class="search-panel">
+        <div class="search-field">
+            <input type="text" id="buscar-materiais" placeholder="Pesquisar por título do material..." data-search-input="materiais">
+        </div>
+    </div>
+
     <div class="table-responsive">
         <table class="custom-table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Tipo</th>
-                    <th>Tamanho</th>
-                    <th>Aula</th>
-                    <th>Ações</th>
+                    <th style="width: 10%;">ID</th>
+                    <th style="width: 45%;">Título do Material</th>
+                    <th style="width: 25%;">Aula Vinculada</th>
+                    <th style="width: 20%;">Ações</th>
                 </tr>
             </thead>
-            <tbody>
-                {% for m in materiais %}
-                <tr>
-                    <td>#{{ m[0] }}</td>
-                    <td style="font-weight: 600; color: var(--primary-color);">{{ m[1] }}</td>
-                    <td>{{ m[2] }}</td>
-                    <td>{{ m[3] }}</td>
-                    <td>{{ m[4] }}</td>
-                    <td>
-                        <div class="actions">
-                            <a href="/admin/editar-material/{{ m[0] }}" class="btn-secondary">Editar</a>
-                            <form action="/admin/excluir-material/{{ m[0] }}" method="POST" onsubmit="return confirm('Tem certeza?');">
-                                <button type="submit" class="btn-danger">Excluir</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+            <tbody data-search-target="materiais">
+                {% for material in materiais %}
+                    <tr data-search-item>
+                        <td>#{{ material[0] }}</td>
+                        <td style="font-weight: 500; color: var(--primary-color);">{{ material[1] }}</td>
+                        <td>{{ material[2] }}</td> <td>
+                            <div class="actions">
+                                <a href="/admin/editar-material/{{ material[0] }}" class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Editar</a>
+                                <form action="/admin/excluir-material/{{ material[0] }}" method="POST" onsubmit="return confirm('ATENÇÃO!\nTem certeza que deseja excluir o material {{ material[1] }}?');">
+                                    <button type="submit" class="btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
                 {% else %}
-                <tr><td colspan="6" style="text-align: center; padding: 20px;">Nenhum material cadastrado.</td></tr>
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 30px; color: var(--text-light);">
+                            Nenhum material encontrado no sistema.
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='search.js') }}"></script>
 {% endblock %}

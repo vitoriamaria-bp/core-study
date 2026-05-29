@@ -2,33 +2,43 @@
 
 {% block title %}Adicionar Categoria - Core Study{% endblock %}
 
-{% block header %}
-<header class="page-header">
-    <div class="page-header-left" style="display: flex; align-items: center; gap: 15px;">
-        <button id="toggle-sidebar" class="toggle-sidebar-btn" aria-label="Recolher Menu">☰</button>
-        <div>
-            <h1>Adicionar Categoria</h1>
-            <p>Cadastre uma nova área de estudo no sistema.</p>
-        </div>
-    </div>
-    <div>
-        <a href="/admin/categorias" class="btn-secondary">Voltar para Categorias</a>
-    </div>
-</header>
-{% endblock %}
+{% block header_title %}Gerenciamento de Categorias{% endblock %}
 
 {% block content %}
-<div class="content-card" style="max-width: 600px; margin: 0 auto;">
-    <form method="POST">
-        <div class="form-group">
-            <label for="nome_categoria">Nome da Categoria</label>
-            <input id="nome_categoria" type="text" name="nome_categoria" placeholder="Ex: Programação Front-end" required>
-        </div>
+<header class="page-header" style="justify-content: space-between; display: flex; align-items: flex-end; margin-bottom: 30px; position: relative;">
+    <div>
+        <h1 style="font-size: 24px; color: var(--primary-color); font-weight: 700;">Nova Categoria</h1>
+        <p style="color: var(--text-light); font-size: 14px;">Crie uma nova área de conhecimento para organizar os seus cursos.</p>
+    </div>
+    <div>
+        <a href="/admin/categorias" class="btn-secondary" style="width: auto;">← Voltar para Lista</a>
+    </div>
+</header>
+
+<div class="content-card" style="max-width: 500px; margin: 0 auto; padding: 35px; background-color: rgba(255, 255, 255, 0.95); box-shadow: 0 8px 30px rgba(0,0,0,0.08); border: 1px solid var(--border-color); position: relative;">
+    
+    <form action="/admin/adicionar-categoria" method="POST">
         
-        <div class="btn-block" style="flex-direction: row; margin-top: 30px;">
+        <div class="form-group" style="margin-bottom: 35px;">
+            <label for="nome_categoria" style="display: block; margin-bottom: 25px; font-weight: 600; font-size: 16px; color: var(--text-color);">Nome da Categoria</label>
+            <input type="text" id="nome_categoria" name="nome_categoria" placeholder="Ex: Programação, Design, Banco de Dados..." required style="width: 100%;">
+        </div>
+
+        <div style="border-top: 1px solid rgba(203, 213, 225, 0.5); padding-top: 20px; display: flex; justify-content: flex-end; gap: 15px;">
+            <a href="/admin/categorias" class="btn-secondary" style="width: auto;">Cancelar</a>
             <button type="submit" class="btn-primary" style="width: auto;">Salvar Categoria</button>
-            <a href="/admin/categorias" class="btn-secondary" style="width: auto; text-align: center; padding: 10px 18px;">Cancelar</a>
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let menuCategoria = document.querySelector('.sidebar-menu a[href="/admin/categorias"]');
+        if(menuCategoria) {
+            menuCategoria.classList.add('active');
+        }
+    });
+</script>
 {% endblock %}

@@ -77,7 +77,11 @@ def cadastro():
     if request.method == "POST":
         nome = request.form["nome"]
         email = request.form["email"]
-        telefone = request.form.get("telefone") # O JS do outro dev envia este campo oculto
+        
+        # Intercepta e arranca o +55 que o JS do outro dev envia
+        telefone_bruto = request.form.get("telefone", "")
+        telefone = telefone_bruto.replace("+55 ", "").replace("+55", "").strip()
+        
         data_nasc = request.form["data_nasc"]
         senha = request.form["senha"]
 
@@ -124,7 +128,6 @@ def logout():
     session.clear()
     return redirect("/")
 
-# --- MANTIVE AS SUAS ROTAS DO ADMIN EXATAMENTE COMO ESTAVAM, APENAS TROCANDO O RENDER DE ERRO PELO FLASH ---
 @app.route("/admin/usuarios")
 def usuarios():
     if not verificar_admin(): return redirect("/login")
@@ -142,7 +145,7 @@ def adicionar_usuario_admin():
     if request.method == "POST":
         nome = request.form["nome"]
         email = request.form["email"]
-        telefone = request.form["telefone"]
+        telefone = request.form["telefone"] # Salva exatamente o número bonito que você digitou
         data_nasc = request.form["data_nasc"]
         senha = request.form["senha"]
         conexao = conectar()
@@ -171,7 +174,7 @@ def editar_usuario_admin(id_usuario):
     if request.method == "POST":
         nome = request.form["nome"]
         email = request.form["email"]
-        telefone = request.form["telefone"]
+        telefone = request.form["telefone"] # Salva apenas o número formatado com DDD
         data_nasc = request.form["data_nasc"]
         senha = request.form["senha"]
         if campo_vazio(nome) or campo_vazio(email) or campo_vazio(telefone) or campo_vazio(data_nasc) or campo_vazio(senha):
@@ -221,11 +224,13 @@ def cursos_admin():
     if not verificar_admin(): return redirect("/login")
     conexao = conectar()
     cursor = conexao.cursor()
-    cursor.execute("SELECT tbl_cursos.id_curso, tbl_cursos.titulo_curso, tbl_cursos.descricao_curso, tbl_cursos.carga_hora_curso, tbl_categoria.nome_categoria FROM tbl_cursos LEFT JOIN tbl_categoria ON tbl_cursos.fk_tbl_categoria_id_categoria = tbl_categoria.id_categoria")
+    cursor.execute("SELECT c.id_curso, c.titulo_curso, c.descricao_curso, c.carga_hora_curso, cat.nome_categoria FROM tbl_cursos c LEFT JOIN tbl_categoria cat ON c.fk_tbl_categoria_id_categoria = cat.id_categoria")
     cursos = cursor.fetchall()
+    cursor.execute("SELECT id_categoria, nome_categoria FROM tbl_categoria")
+    categorias = cursor.fetchall()
     cursor.close()
     conexao.close()
-    return render_template("cursos.html", cursos=cursos, admin=True)
+    return render_template("cursos.html", cursos=cursos, categorias=categorias, admin=True)
 
 @app.route("/admin/adicionar-curso", methods=["GET", "POST"])
 def adicionar_curso():

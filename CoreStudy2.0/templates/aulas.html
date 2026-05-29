@@ -2,55 +2,63 @@
 
 {% block title %}Gerenciar Aulas - Core Study{% endblock %}
 
-{% block header %}
-<header class="page-header">
-    <div class="page-header-left" style="display: flex; align-items: center; gap: 15px;">
-        <button id="toggle-sidebar" class="toggle-sidebar-btn" aria-label="Recolher Menu">☰</button>
-        <div>
-            <h1>Gerenciar Aulas</h1>
-            <p>Administre as aulas cadastradas em cada módulo.</p>
-        </div>
-    </div>
-    <a href="/admin/adicionar-aula" class="btn-primary">+ Nova Aula</a>
-</header>
-{% endblock %}
+{% block header_title %}Gerenciamento de Aulas{% endblock %}
 
 {% block content %}
+<header class="page-header" style="justify-content: space-between; display: flex; align-items: flex-end; margin-bottom: 20px;">
+    <div>
+        <h1 style="font-size: 24px; color: var(--primary-color); font-weight: 700;">Gerenciamento de Aulas</h1>
+        <p style="color: var(--text-light); font-size: 14px;">Adicione o conteúdo principal e os links de vídeo dentro dos módulos.</p>
+    </div>
+    <div style="min-width: 160px;">
+        <a href="/admin/adicionar-aula" class="btn-primary">+ Adicionar Aula</a>
+    </div>
+</header>
+
 <div class="content-card">
+    <div class="search-panel">
+        <div class="search-field">
+            <input type="text" id="buscar-aulas" placeholder="Pesquisar por título da aula..." data-search-input="aulas">
+        </div>
+    </div>
+
     <div class="table-responsive">
         <table class="custom-table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Aula</th>
-                    <th>Link</th>
-                    <th>Módulo</th>
-                    <th>Curso</th>
-                    <th>Ações</th>
+                    <th style="width: 10%;">ID</th>
+                    <th style="width: 45%;">Título da Aula</th>
+                    <th style="width: 25%;">Módulo Vinculado</th>
+                    <th style="width: 20%;">Ações</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody data-search-target="aulas">
                 {% for aula in aulas %}
-                <tr>
-                    <td>#{{ aula[0] }}</td>
-                    <td style="font-weight: 600; color: var(--primary-color);">{{ aula[1] }}</td>
-                    <td><a href="{{ aula[2] }}" target="_blank" class="btn-secondary" style="padding: 4px 8px; font-size: 11px;">Link</a></td>
-                    <td>{{ aula[3] }}</td>
-                    <td>{{ aula[4] }}</td>
-                    <td>
-                        <div class="actions">
-                            <a href="/admin/editar-aula/{{ aula[0] }}" class="btn-secondary">Editar</a>
-                            <form action="/admin/excluir-aula/{{ aula[0] }}" method="POST" onsubmit="return confirm('Tem certeza?');">
-                                <button type="submit" class="btn-danger">Excluir</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+                    <tr data-search-item>
+                        <td>#{{ aula[0] }}</td>
+                        <td style="font-weight: 500; color: var(--primary-color);">{{ aula[1] }}</td>
+                        <td>{{ aula[2] }}</td> <td>
+                            <div class="actions">
+                                <a href="/admin/editar-aula/{{ aula[0] }}" class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Editar</a>
+                                <form action="/admin/excluir-aula/{{ aula[0] }}" method="POST" onsubmit="return confirm('ATENÇÃO!\nTem certeza que deseja excluir a aula {{ aula[1] }}?');">
+                                    <button type="submit" class="btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
                 {% else %}
-                <tr><td colspan="6" style="text-align: center; padding: 20px;">Nenhuma aula cadastrada.</td></tr>
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 30px; color: var(--text-light);">
+                            Nenhuma aula encontrada no sistema.
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='search.js') }}"></script>
 {% endblock %}

@@ -1,37 +1,50 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Adicionar Modulo</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body class="form-page">
+{% extends "base.html" %}
 
-    <main class="form-card">
-        <h1>Adicionar Modulo</h1>
-        <p>Crie um modulo e associe-o a um curso.</p>
+{% block title %}Adicionar Módulo - Core Study{% endblock %}
 
-        <form method="POST">
-            <div class="form-group">
-                <label for="titulo">Titulo do modulo</label>
-                <input id="titulo" type="text" name="titulo" required>
-            </div>
+{% block header_title %}Adicionar Módulo{% endblock %}
 
-            <div class="form-group">
-                <label for="curso_id">Curso</label>
-                <select id="curso_id" name="curso_id" required>
-                    {% for curso in cursos %}
-                        <option value="{{ curso[0] }}">{{ curso[1] }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+{% block content %}
+<header class="page-header" style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 25px;">
+    <div>
+        <h1 style="font-size: 24px; color: var(--primary-color); font-weight: 700;">Novo Módulo</h1>
+        <p style="color: var(--text-light); font-size: 14px;">Vincule o módulo a um curso existente.</p>
+    </div>
+    <div>
+        <a href="/admin/modulos" class="btn-secondary">← Voltar</a>
+    </div>
+</header>
 
-            <div class="button-row">
-                <button type="submit">Cadastrar</button>
-                <a href="/admin/modulos" class="btn-secondary">Voltar</a>
-            </div>
-        </form>
-    </main>
+<div class="content-card" style="max-width: 850px; margin: 0 auto; padding: 40px;">
+    <form action="/admin/adicionar-modulo" method="POST">
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label for="titulo" style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px;">Nome do Módulo</label>
+            <input type="text" id="titulo" name="titulo" placeholder="Ex: Introdução ao Python" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 6px;">
+        </div>
 
-</body>
-</html>
+        <div class="form-group" style="margin-bottom: 40px;">
+            <label for="curso_id" style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px;">Curso Vinculado</label>
+            <select id="curso_id" name="curso_id" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 6px;">
+                <option value="" disabled selected>Selecione o curso...</option>
+                {% for curso in cursos %}
+                    <option value="{{ curso[0] }}">{{ curso[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div style="border-top: 1px solid var(--border-color); padding-top: 25px; display: flex; justify-content: flex-end; gap: 15px;">
+            <a href="/admin/modulos" class="btn-secondary">Cancelar</a>
+            <button type="submit" class="btn-primary">Salvar Módulo</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let menuModulo = document.querySelector('.sidebar-menu a[href="/admin/modulos"]');
+        if(menuModulo) menuModulo.classList.add('active');
+    });
+</script>
+{% endblock %}

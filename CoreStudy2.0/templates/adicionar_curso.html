@@ -2,53 +2,62 @@
 
 {% block title %}Adicionar Curso - Core Study{% endblock %}
 
-{% block header %}
-<header class="page-header">
-    <div class="page-header-left" style="display: flex; align-items: center; gap: 15px;">
-        <button id="toggle-sidebar" class="toggle-sidebar-btn" aria-label="Recolher Menu">☰</button>
-        <div>
-            <h1>Adicionar Curso</h1>
-            <p>Cadastre as informações base de um novo curso.</p>
-        </div>
-    </div>
-    <div>
-        <a href="/admin/cursos" class="btn-secondary">Voltar para Cursos</a>
-    </div>
-</header>
-{% endblock %}
+{% block header_title %}Adicionar Curso{% endblock %}
 
 {% block content %}
-<div class="content-card" style="max-width: 600px; margin: 0 auto;">
-    <form method="POST">
-        <div class="form-group">
-            <label for="titulo">Título do Curso</label>
-            <input id="titulo" type="text" name="titulo" placeholder="Ex: Python para Iniciantes" required>
-        </div>
+<header class="page-header" style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 20px;">
+    <div>
+        <h1 style="font-size: 22px; color: var(--primary-color); font-weight: 700;">Novo Curso</h1>
+        <p style="color: var(--text-light); font-size: 13px;">Preencha os campos para cadastrar o curso.</p>
+    </div>
+    <div>
+        <a href="/admin/cursos" class="btn-secondary" style="font-size: 13px; padding: 6px 12px;">← Voltar</a>
+    </div>
+</header>
+
+<div class="content-card" style="max-width: 850px; margin: 0 auto; padding: 25px;">
+    
+    <form action="/admin/adicionar-curso" method="POST">
         
-        <div class="form-group">
-            <label for="categoria_id">Categoria</label>
-            <select id="categoria_id" name="categoria_id" required>
-                <option value="">Selecione uma categoria...</option>
-                {% for cat in categorias %}
-                    <option value="{{ cat[0] }}">{{ cat[1] }}</option>
-                {% endfor %}
-            </select>
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="titulo" style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; text-transform: none !important;">Nome do Curso</label>
+            <input type="text" id="titulo" name="titulo" placeholder="Ex: Python para Iniciantes" required style="width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px;">
         </div>
 
-        <div class="form-group">
-            <label for="carga_hora">Carga Horária (Horas)</label>
-            <input id="carga_hora" type="number" name="carga_hora" placeholder="Ex: 40" required min="1">
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="descricao" style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; text-transform: none !important;">Descrição</label>
+            <textarea id="descricao" name="descricao" rows="3" placeholder="Breve resumo..." required style="width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px;"></textarea>
         </div>
 
-        <div class="form-group">
-            <label for="descricao">Descrição do Curso</label>
-            <input id="descricao" type="text" name="descricao" placeholder="Escreva um breve resumo sobre o que será ensinado..." required style="height: 80px;">
+        <div style="display: flex; gap: 20px;">
+            <div class="form-group" style="margin-bottom: 15px; flex: 1;">
+                <label for="carga_hora" style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; text-transform: none !important;">Carga Horária (horas)</label>
+                <input type="number" id="carga_hora" name="carga_hora" placeholder="Ex: 40" required style="width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px; flex: 1;">
+                <label for="categoria_id" style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; text-transform: none !important;">Categoria</label>
+                <select id="categoria_id" name="categoria_id" required style="width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px;">
+                    <option value="" disabled selected>Selecione...</option>
+                    {% for categoria in categorias %}
+                        <option value="{{ categoria[0] }}">{{ categoria[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
-        
-        <div class="btn-block" style="flex-direction: row; margin-top: 30px;">
-            <button type="submit" class="btn-primary" style="width: auto;">Salvar Curso</button>
-            <a href="/admin/cursos" class="btn-secondary" style="width: auto; text-align: center; padding: 10px 18px;">Cancelar</a>
+
+        <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
+            <button type="submit" class="btn-primary" style="padding: 8px 20px;">Salvar Curso</button>
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let menuCurso = document.querySelector('.sidebar-menu a[href="/admin/cursos"]');
+        if(menuCurso) menuCurso.classList.add('active');
+    });
+</script>
 {% endblock %}

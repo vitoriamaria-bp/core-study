@@ -1,42 +1,37 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Modulo</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body class="form-page">
+{% extends "base.html" %}
+{% block title %}Editar Módulo{% endblock %}
+{% block header_title %}Editar Módulo{% endblock %}
 
-    <main class="form-card">
-        <h1>Editar Modulo</h1>
-        <p>Atualize o nome e o curso vinculado ao modulo.</p>
+{% block content %}
+<header class="page-header" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px;">
+    <div>
+        <h1 style="font-size: 24px; color: var(--primary-color); font-weight: 700;">Editar Módulo</h1>
+    </div>
+    <div>
+        <a href="/admin/modulos" class="btn-secondary">← Voltar</a>
+    </div>
+</header>
 
-        <form method="POST">
-            <div class="form-group">
-                <label for="titulo">Titulo</label>
-                <input id="titulo" type="text" name="titulo" value="{{ modulo[1] }}" required>
-            </div>
+<div class="content-card" style="max-width: 850px; margin: 0 auto; padding: 40px;">
+    <form action="/admin/editar-modulo/{{ modulo[0] }}" method="POST">
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label for="titulo" style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px;">NOME DO MÓDULO</label>
+            <input type="text" id="titulo" name="titulo" value="{{ modulo[1] }}" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; box-sizing: border-box;">
+        </div>
 
-            <div class="form-group">
-                <label for="curso_id">Curso</label>
-                <select id="curso_id" name="curso_id" required>
-                    {% for curso in cursos %}
-                        <option
-                            value="{{ curso[0] }}"
-                            {% if curso[0] == modulo[2] %}selected{% endif %}
-                        >
-                            {{ curso[1] }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
+        <div class="form-group" style="margin-top: 40px; margin-bottom: 40px;">
+            <label for="curso_id" style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px;">CURSO VINCULADO</label>
+            <select id="curso_id" name="curso_id" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; box-sizing: border-box; background: #fff;">
+                {% for curso in cursos %}
+                    <option value="{{ curso[0] }}" {% if curso[0] == modulo[2] %}selected{% endif %}>{{ curso[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-            <div class="button-row">
-                <button type="submit">Atualizar</button>
-                <a href="/admin/modulos" class="btn-secondary">Voltar</a>
-            </div>
-        </form>
-    </main>
-
-</body>
-</html>
+        <div style="border-top: 1px solid var(--border-color); padding-top: 25px; display: flex; gap: 10px; justify-content: flex-end;">
+            <a href="/admin/modulos" class="btn-secondary">Cancelar</a>
+            <button type="submit" class="btn-primary">Salvar Alterações</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
