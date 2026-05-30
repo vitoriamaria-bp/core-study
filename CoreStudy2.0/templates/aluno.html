@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Fundo Mesh Gradient Ativo */
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #f0f4f8;
@@ -24,10 +23,9 @@
             color: #1e293b; 
         }
         
-        /* Navegação com altura otimizada verticalmente */
         .student-navbar { 
             background-color: #fff; 
-            padding: 8px 40px; /* Reduzido para economizar espaço vertical */
+            padding: 8px 40px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
@@ -38,21 +36,21 @@
             z-index: 100;
         }
         .student-navbar img { 
-            height: 65px; /* Logo grandona conforme exigido */
+            height: 65px; 
             object-fit: contain; 
         }
         .student-nav-right { display: flex; align-items: center; gap: 20px; }
-        .student-greeting { font-weight: 700; color: var(--primary-color); font-size: 16px; } /* Nome maior */
+        .student-greeting { font-weight: 700; color: var(--primary-color); font-size: 16px; } 
         .btn-logout { background-color: #fff5f0; color: #e67e22; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; border: 1px solid #fcd5c1; transition: 0.2s; }
         .btn-logout:hover { background-color: #e67e22; color: #fff; }
 
-        .student-container { max-width: 1100px; margin: 20px auto; padding: 0 20px; } /* Margem superior reduzida */
+        .student-container { max-width: 1100px; margin: 20px auto; padding: 0 20px; } 
         
         /* HERO ULTRA COMPACTO: Ocupa o mínimo de espaço na tela */
         .student-hero { 
             background: linear-gradient(135deg, var(--primary-color) 0%, #0f172a 100%);
             color: #fff; 
-            padding: 20px 30px; /* Reduzido drasticamente */
+            padding: 20px 30px; 
             border-radius: 8px; 
             margin-bottom: 20px; 
             display: flex; 
@@ -75,10 +73,10 @@
         }
 
         .hero-text { position: relative; z-index: 2; }
-        .student-hero h1 { margin: 0 0 4px 0; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; } /* Encolhido */
+        .student-hero h1 { margin: 0 0 4px 0; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; } 
         .student-hero p { margin: 0; font-size: 14px; opacity: 0.9; font-weight: 400; max-width: 700px; }
         
-        .hero-icon { font-size: 45px; position: relative; z-index: 2; animation: floatIcon 4s ease-in-out infinite; } /* Menor */
+        .hero-icon { font-size: 45px; position: relative; z-index: 2; animation: floatIcon 4s ease-in-out infinite; } 
         @keyframes floatIcon {
             0%, 100% { transform: translateY(0) rotate(-5deg); }
             50% { transform: translateY(-5px) rotate(5deg); }
@@ -129,6 +127,7 @@
 <body>
 
     <header class="student-navbar">
+        {% include 'mensagens.html' %}
         <img src="{{ url_for('static', filename='img/logo_core_study.png') }}" alt="Logo Core Study">
         <div class="student-nav-right">
             <span class="student-greeting">Olá, {{ nome_usuario }}! 👋</span>
@@ -140,8 +139,8 @@
         
         <div class="student-hero">
             <div class="hero-text">
-                <h1>Sua jornada de aprendizado</h1>
-                <p>Explore a sua trilha de conhecimentos profissional e aceda aos materiais de apoio.</p>
+                <h1>Pronto para continuar aprendendo?</h1>
+                <p>Explore sua trilha de conhecimentos e acesse os materiais liberados para você.</p>
             </div>
             <div class="hero-icon">🚀</div>
         </div>
@@ -169,7 +168,7 @@
                             ⏱️ {{ curso[3] }} horas de conteúdo
                         </div>
                         <div class="course-action">
-                            <a href="/trilha/curso/{{ curso[0] }}" class="btn-course">Aceder ao Curso</a>
+                            <a href="/trilha/curso/{{ curso[0] }}" class="btn-course">Acessar Curso</a>
                         </div>
                     </div>
                 </div>

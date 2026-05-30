@@ -2,69 +2,193 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ aula[1] }} - Core Study</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f0f4f8; margin: 0; color: #1e293b; }
-        .classroom-header { background: #fff; padding: 15px 40px; border-bottom: 2px solid #e2e8f0; display: flex; align-items: center; gap: 20px; }
-        .btn-voltar { color: #e67e22; text-decoration: none; font-weight: 700; font-size: 14px; }
+        :root {
+            --primary-color: #11213A;
+            --accent-color: #FF6B00;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #0f172a; 
+            margin: 0; 
+            color: #f1f5f9; 
+            min-height: 100vh;
+        }
         
-        .classroom-main { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 320px; gap: 30px; }
+        .student-navbar { 
+            background-color: #fff; 
+            padding: 8px 40px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 3px solid var(--accent-color); 
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar-left { display: flex; align-items: center; gap: 30px; }
+        .student-navbar img { height: 65px; object-fit: contain; }
         
-        /* Correção do Player: Mantém proporção e evita cortes */
-        .video-container { background: #000; border-radius: 12px; overflow: hidden; width: 100%; aspect-ratio: 16/9; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .video-container iframe { width: 100%; height: 100%; border: none; }
+        .btn-voltar { color: var(--primary-color); text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 6px; background: #f1f5f9; transition: 0.2s; display: flex; align-items: center; gap: 6px; }
+        .btn-voltar:hover { background: #e2e8f0; color: var(--accent-color); }
         
-        .material-box { background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 20px; }
-        .material-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8fafc; border-radius: 8px; margin-top: 10px; border: 1px solid #e2e8f0; }
+        .student-nav-right { display: flex; align-items: center; gap: 15px; }
+        .student-greeting { font-weight: 700; color: var(--primary-color); font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        .avatar-icon { background: #eef2f6; color: var(--primary-color); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 1px solid #cbd5e1; }
+
+        .classroom-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 30px;
+        }
         
-        .sidebar { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; height: fit-content; }
-        .sidebar h3 { font-size: 16px; margin-top: 0; color: #0f172a; }
-        .aula-link { display: block; padding: 10px; color: #475569; text-decoration: none; font-size: 14px; border-radius: 6px; margin-bottom: 5px; transition: 0.2s; }
-        .aula-link:hover { background: #fff3eb; color: #e67e22; font-weight: 600; }
-        .aula-link.active { background: #e67e22; color: #fff; }
+        .video-column { display: flex; flex-direction: column; }
+        
+        .video-box-container {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            width: 100%;
+            aspect-ratio: 16/9;
+        }
+        .video-box-container iframe, .video-box-container video { 
+            width: 100%; height: 100%; border: none; display: block; 
+        }
+        
+        .lesson-title-display { margin-top: 25px; margin-bottom: 25px; }
+        .lesson-title-display h1 { font-size: 28px; font-weight: 800; margin: 0; color: #fff; letter-spacing: -0.5px; }
+
+        .tabs-nav-bar { display: flex; gap: 10px; border-bottom: 2px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+        .tab-trigger { background: transparent; border: none; color: #94a3b8; padding: 12px 20px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .tab-trigger:hover { color: #f1f5f9; }
+        .tab-trigger.active { color: var(--accent-color); border-bottom: 2px solid var(--accent-color); margin-bottom: -2px; }
+
+        .tab-view-content { display: none; background: rgba(255, 255, 255, 0.03); padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        .tab-view-content.active { display: block; }
+        .tab-view-content p { line-height: 1.6; color: #cbd5e1; margin: 0 0 15px 0; }
+
+        .material-download-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 10px; }
+        .material-meta-group { display: flex; align-items: center; gap: 12px; }
+        
+        .btn-action-download { background: var(--primary-color); color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 700; transition: 0.2s; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.1);}
+        .btn-action-download:hover { background: var(--accent-color); border-color: var(--accent-color); }
+
+        .playlist-column {
+            background: var(--primary-color);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            height: fit-content;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .playlist-column h3 { font-size: 16px; margin: 0 0 20px 0; color: #fff; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; }
+        
+        .playlist-link { display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: #cbd5e1; text-decoration: none; font-size: 14px; border-radius: 8px; margin-bottom: 8px; font-weight: 600; transition: 0.2s; border: 1px solid transparent; }
+        .playlist-link:hover { background: rgba(255,255,255,0.05); color: #fff; }
+        .playlist-link.active { background: var(--accent-color); color: #fff; font-weight: 700; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3); border-color: var(--accent-color); }
+
+        @media (max-width: 992px) {
+            .classroom-layout { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
-    <header class="classroom-header">
-        <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
-        <h2 style="margin:0; font-size: 18px;">{{ aula[1] }}</h2>
+    <header class="student-navbar">
+        <div class="navbar-left">
+            <img src="{{ url_for('static', filename='img/logo_core_study.png') }}" alt="Logo Core Study">
+            <a href="javascript:history.back()" class="btn-voltar">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Voltar ao Curso
+            </a>
+        </div>
+        <div class="student-nav-right">
+            <div class="student-greeting">
+                <span class="avatar-icon">👤</span>
+                {{ nome_usuario }}
+            </div>
+        </div>
     </header>
 
-    <main class="classroom-main">
-        <section>
-            <div class="video-container">
-                <iframe src="{{ aula[2] }}" allowfullscreen></iframe>
+    {% include 'mensagens.html' %}
+
+    <div class="classroom-layout">
+        <div class="video-column">
+            <div class="video-box-container">
+                {% if aula[4] == True %}
+                    <video controls controlsList="nodownload">
+                        <source src="{{ aula[2] }}" type="video/mp4">
+                        Seu navegador não suporta a tag de vídeo HTML5.
+                    </video>
+                {% else %}
+                    <iframe src="{{ aula[2] }}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                {% endif %}
             </div>
 
-            <div class="material-box">
-                <h3 style="margin-top:0;">Materiais de Apoio</h3>
+            <div class="lesson-title-display">
+                <h1>{{ aula[1] }}</h1>
+            </div>
+
+            <nav class="tabs-nav-bar">
+                <button class="tab-trigger active" onclick="changeTab(event, 'info-aba')">Visão Geral</button>
+                <button class="tab-trigger" onclick="changeTab(event, 'materiais-aba')">Materiais de Apoio</button>
+            </nav>
+
+            <div id="info-aba" class="tab-view-content active">
+                <h3>Sobre esta aula</h3>
+                <p>Esta aula integra a grade de formação profissional da plataforma Core Study. Assista ao conteúdo técnico projetado e aplique os conceitos apresentados diretamente no seu ambiente local.</p>
+            </div>
+
+            <div id="materiais-aba" class="tab-view-content">
+                <h3>Arquivos Disponíveis</h3>
                 {% for mat in materiais %}
-                <div class="material-item">
-                    <span>📄</span>
-                    <div>
-                        <strong>{{ mat[1] }}</strong><br>
-                        <small style="color: #64748b;">Disponível para download</small>
+                <div class="material-download-row">
+                    <div class="material-meta-group">
+                        <span style="font-size: 20px;">📄</span>
+                        <div>
+                            <strong style="color: #fff;">{{ mat[1] }}</strong><br>
+                            <span style="color: #94a3b8; font-size: 12px;">{{ mat[2] }} • Tamanho: {{ mat[3] }}</span>
+                        </div>
                     </div>
+                    <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank" download class="btn-action-download">⬇ Baixar PDF</a>
                 </div>
                 {% else %}
-                <p style="color: #64748b; font-size: 14px;">Nenhum material disponível para esta aula.</p>
+                <p style="color: #94a3b8; margin: 0; font-size: 14px;">Nenhum material associado a esta aula.</p>
                 {% endfor %}
             </div>
-        </section>
+        </div>
 
-        <aside class="sidebar">
-            <h3>Conteúdo do Módulo</h3>
+        <div class="playlist-column">
+            <h3>Aulas do Módulo</h3>
             {% for outra_aula in todas_aulas_modulo %}
-            <a href="/trilha/aula/{{ outra_aula[0] }}" class="aula-link {% if outra_aula[0] == aula[0] %}active{% endif %}">
+            <a href="/trilha/aula/{{ outra_aula[0] }}" class="playlist-link {% if outra_aula[0] == aula[0] %}active{% endif %}">
+                <span>{% if outra_aula[0] == aula[0] %}▶{% else %}●{% endif %}</span>
                 {{ outra_aula[1] }}
             </a>
             {% endfor %}
-        </aside>
-    </main>
+        </div>
+    </div>
 
+    <script>
+        function changeTab(event, tabId) {
+            const contents = document.querySelectorAll('.tab-view-content');
+            const triggers = document.querySelectorAll('.tab-trigger');
+            contents.forEach(c => c.classList.remove('active'));
+            triggers.forEach(t => t.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
 </html>
