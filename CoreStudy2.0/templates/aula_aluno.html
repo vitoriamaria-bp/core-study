@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ aula[1] }} - Core Study</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -21,9 +22,10 @@
             min-height: 100vh;
         }
         
+        /* NAVBAR INTEGRADA AO TEMA ESCURO */
         .student-navbar { 
-            background-color: #fff; 
-            padding: 8px 40px; 
+            background-color: var(--primary-color); 
+            padding: 8px 20px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
@@ -31,21 +33,62 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            height: 70px; 
         }
-        .navbar-left { display: flex; align-items: center; gap: 30px; }
-        .student-navbar img { height: 65px; object-fit: contain; }
+        .navbar-left { display: flex; align-items: center; gap: 20px; }
         
-        .btn-voltar { color: var(--primary-color); text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 6px; background: #f1f5f9; transition: 0.2s; display: flex; align-items: center; gap: 6px; }
-        .btn-voltar:hover { background: #e2e8f0; color: var(--accent-color); }
+        /* SUPORTE EM BRANCO ATRÁS DA LOGO (AJUSTADO) */
+        .logo-container-bg {
+            background-color: #ffffff;
+            padding: 4px 8px; /* Reduzido o fundo branco */
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-container-bg img { height: 48px; object-fit: contain; } /* Logo maior */
+        
+        /* BOTÃO VOLTAR ADAPTADO PARA O MODO ESCURO */
+        .btn-voltar { 
+            color: #f1f5f9; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 13px; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            background: rgba(255, 255, 255, 0.05); 
+            transition: 0.2s; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-voltar:hover { 
+            background: rgba(255, 255, 255, 0.15); 
+            color: var(--accent-color); 
+            border-color: var(--accent-color);
+        }
         
         .student-nav-right { display: flex; align-items: center; gap: 15px; }
-        .student-greeting { font-weight: 700; color: var(--primary-color); font-size: 15px; display: flex; align-items: center; gap: 8px; }
-        .avatar-icon { background: #eef2f6; color: var(--primary-color); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 1px solid #cbd5e1; }
+        .student-greeting { font-weight: 700; color: #f1f5f9; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        
+        /* AVATAR DO PINGUIM ESTILIZADO COM DESTAQUE */
+        .avatar-icon { 
+            background: #ffffff; 
+            width: 32px; 
+            height: 32px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 18px; 
+            border: 2px solid var(--accent-color);
+        }
 
         .classroom-layout {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 30px 20px;
+            padding: 20px; 
             display: grid;
             grid-template-columns: 1fr 360px;
             gap: 30px;
@@ -53,6 +96,7 @@
         
         .video-column { display: flex; flex-direction: column; }
         
+        /* CONTÊINER DO PLAYER CONTROLADO EM 750PX */
         .video-box-container {
             background: #000;
             border-radius: 12px;
@@ -60,23 +104,27 @@
             border: 1px solid rgba(255,255,255,0.1);
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             width: 100%;
+            max-width: 750px; 
+            margin: 0 auto; 
             aspect-ratio: 16/9;
         }
         .video-box-container iframe, .video-box-container video { 
             width: 100%; height: 100%; border: none; display: block; 
         }
         
-        .lesson-title-display { margin-top: 25px; margin-bottom: 25px; }
-        .lesson-title-display h1 { font-size: 28px; font-weight: 800; margin: 0; color: #fff; letter-spacing: -0.5px; }
+        .lesson-title-display { margin-top: 20px; margin-bottom: 20px; text-align: center; max-width: 750px; margin-left: auto; margin-right: auto;}
+        .lesson-title-display h1 { font-size: 24px; font-weight: 800; margin: 0; color: #fff; letter-spacing: -0.5px; }
 
-        .tabs-nav-bar { display: flex; gap: 10px; border-bottom: 2px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+        .tabs-nav-bar { display: flex; gap: 10px; border-bottom: 2px solid rgba(255,255,255,0.1); margin-bottom: 20px; max-width: 750px; margin-left: auto; margin-right: auto;}
         .tab-trigger { background: transparent; border: none; color: #94a3b8; padding: 12px 20px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; }
         .tab-trigger:hover { color: #f1f5f9; }
         .tab-trigger.active { color: var(--accent-color); border-bottom: 2px solid var(--accent-color); margin-bottom: -2px; }
 
-        .tab-view-content { display: none; background: rgba(255, 255, 255, 0.03); padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        .tab-view-content { display: none; background: rgba(255, 255, 255, 0.03); padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); max-width: 750px; margin-left: auto; margin-right: auto; box-sizing: border-box;}
         .tab-view-content.active { display: block; }
         .tab-view-content p { line-height: 1.6; color: #cbd5e1; margin: 0 0 15px 0; }
+        .btn-logout { background-color: rgba(255,255,255,0.05); color: #fff; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; border: 1px solid rgba(255,255,255,0.1); transition: 0.2s; }
+        .btn-logout:hover { background-color: var(--accent-color); border-color: var(--accent-color); color: #fff; }
 
         .material-download-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 10px; }
         .material-meta-group { display: flex; align-items: center; gap: 12px; }
@@ -86,15 +134,15 @@
 
         .playlist-column {
             background: var(--primary-color);
-            padding: 25px;
+            padding: 20px;
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.05);
             height: fit-content;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .playlist-column h3 { font-size: 16px; margin: 0 0 20px 0; color: #fff; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; }
+        .playlist-column h3 { font-size: 15px; margin: 0 0 15px 0; color: #fff; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
         
-        .playlist-link { display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: #cbd5e1; text-decoration: none; font-size: 14px; border-radius: 8px; margin-bottom: 8px; font-weight: 600; transition: 0.2s; border: 1px solid transparent; }
+        .playlist-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: #cbd5e1; text-decoration: none; font-size: 13px; border-radius: 8px; margin-bottom: 6px; font-weight: 600; transition: 0.2s; border: 1px solid transparent; }
         .playlist-link:hover { background: rgba(255,255,255,0.05); color: #fff; }
         .playlist-link.active { background: var(--accent-color); color: #fff; font-weight: 700; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3); border-color: var(--accent-color); }
 
@@ -107,17 +155,22 @@
 
     <header class="student-navbar">
         <div class="navbar-left">
-            <img src="{{ url_for('static', filename='img/logo_core_study.png') }}" alt="Logo Core Study">
+            <div class="logo-container-bg">
+                <img src="{{ url_for('static', filename='img/logo_core_study.png') }}" alt="Logo Core Study">
+            </div>
             <a href="javascript:history.back()" class="btn-voltar">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Voltar ao Curso
+                Voltar
             </a>
         </div>
         <div class="student-nav-right">
-            <div class="student-greeting">
-                <span class="avatar-icon">👤</span>
-                {{ nome_usuario }}
-            </div>
+            <a href="/perfil" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+                <div style="background: #ffffff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; border: 2px solid var(--accent-color);">
+                    <span class="avatar-icon">{{ session.get('user_avatar', '🐧') }}</span>
+                </div>
+                <span class="student-greeting" style="color: #fff;">{{ nome_usuario }}</span>
+            </a>
+            <a href="/logout" class="btn-logout">Sair</a>
         </div>
     </header>
 
@@ -126,7 +179,7 @@
     <div class="classroom-layout">
         <div class="video-column">
             <div class="video-box-container">
-                {% if aula[4] == True %}
+                {% if aula[4] %}
                     <video controls controlsList="nodownload">
                         <source src="{{ aula[2] }}" type="video/mp4">
                         Seu navegador não suporta a tag de vídeo HTML5.
@@ -161,7 +214,7 @@
                             <span style="color: #94a3b8; font-size: 12px;">{{ mat[2] }} • Tamanho: {{ mat[3] }}</span>
                         </div>
                     </div>
-                    <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank" download class="btn-action-download">⬇ Baixar PDF</a>
+                    <a href="{{ mat[4] }}" target="_blank" download class="btn-action-download">⬇ Baixar Arquivo</a>
                 </div>
                 {% else %}
                 <p style="color: #94a3b8; margin: 0; font-size: 14px;">Nenhum material associado a esta aula.</p>

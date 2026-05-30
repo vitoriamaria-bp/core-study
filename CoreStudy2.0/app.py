@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, flash
 from mysql.connector import IntegrityError
 from conexao import conectar
+import re
 
 app = Flask(__name__)
 app.secret_key = "corestudy_secret_key"
@@ -331,7 +332,7 @@ def adicionar_curso():
             
         cursor.execute("SELECT id_categoria, nome_categoria FROM tbl_categoria")
         categorias = cursor.fetchall()
-        return render_template("adicionar_curso.html", categorias=categorias)
+        return render_template("adicionar_curso.html", categories=categorias)
     except Exception as e:
         print(f"Erro em adicionar curso: {e}")
         flash("Erro interno ao adicionar curso.", "danger")
@@ -618,7 +619,7 @@ def adicionar_aula():
         return redirect("/admin/aulas")
     finally:
         if cursor: cursor.close()
-        if conexao: cursor.close()
+        if conexao: conexao.close()
 
 @app.route("/admin/editar-aula/<int:id_aula>", methods=["GET", "POST"])
 def editar_aula(id_aula):
@@ -735,7 +736,7 @@ def editar_material(id_material):
             flash("Material atualizado!", "success")
             return redirect("/admin/materiais")
         cursor.execute("SELECT id_material, nome_material, tipo_material, tam_arqu_material, fk_tbl_aulas_id_aula FROM tbl_materiais WHERE id_material = %s", (id_material,))
-        material = cursor.fetchone()
+        material = material = cursor.fetchone()
         cursor.execute("SELECT id_aula, titulo_aula FROM tbl_aulas")
         aulas = cursor.fetchall()
         return render_template("editar_material.html", material=material, aulas=aulas)
@@ -847,26 +848,36 @@ def visualizar_aula(id_aula):
         url_embed = ""
         is_mp4 = False
         
-        # LÓGICA DEFINITIVA PARA VÍDEO (Apoio YouTube Blindado ou MP4 Direto)
         if url_banco:
+            url_banco = url_banco.strip()  # Limpa espaços em branco acidentais vindos do banco
+            
             if url_banco.endswith(".mp4"):
                 is_mp4 = True
                 url_embed = url_banco
-            elif "watch?v=" in url_banco:
-                video_id = url_banco.split("watch?v=")[1].split("&")[0]
-                url_embed = f"https://www.youtube-nocookie.com/embed/{video_id}?rel=0"
-            elif "youtu.be/" in url_banco:
-                video_id = url_banco.split("youtu.be/")[1].split("?")[0]
-                url_embed = f"https://www.youtube-nocookie.com/embed/{video_id}?rel=0"
-            elif "embed" in url_banco:
-                url_embed = url_banco.replace("youtube.com", "youtube-nocookie.com")
             else:
-                url_embed = url_banco
+                video_id = None
+                
+                # Extração direta e manual do ID do vídeo
+                if "watch?v=" in url_banco:
+                    video_id = url_banco.split("watch?v=")[1].split("&")[0]
+                elif "youtu.be/" in url_banco:
+                    video_id = url_banco.split("youtu.be/")[1].split("?")[0]
+                elif "/embed/" in url_banco:
+                    video_id = url_banco.split("/embed/")[1].split("?")[0]
+                elif "/shorts/" in url_banco:
+                    video_id = url_banco.split("/shorts/")[1].split("?")[0]
+                
+                if video_id:
+                    # Aplica a origem dinamicamente para evitar o Erro 153 do YouTube no Localhost
+                    host_origem = request.host_url.strip('/')
+                    url_embed = f"https://www.youtube.com/embed/{video_id}?rel=0&enablejsapi=1&origin={host_origem}"
+                else:
+                    url_embed = url_banco
         else:
-            # Fallback Universal se o link for vazio no banco
+            # Fallback
             is_mp4 = True
             url_embed = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                
+
         aula_formatada = (aula_raw[0], aula_raw[1], url_embed, aula_raw[3], is_mp4)
         
         cursor.execute("SELECT id_aula, titulo_aula FROM tbl_aulas WHERE fk_tbl_modulos_id_modulo = %s ORDER BY id_aula ASC", (id_modulo,))
@@ -887,8 +898,56 @@ def visualizar_aula(id_aula):
 @app.route("/trilha")
 def trilha():
     if "id_usuario" not in session or session.get("tipo_usuario") != "ALUNO": 
-        return redirect("/login")
+        return redirect("/login")                               
     return redirect("/aluno")
+
+@app.route("/perfil", methods=["GET", "POST"])
+def perfil():
+    if "id_usuario" not in session or session.get("tipo_usuario") != "ALUNO":
+        return redirect("/login")
+    
+    conexao = None
+    cursor = None
+    try:
+        conexao = conectar()
+        cursor = conexao.cursor(dictionary=True)
+        
+        if request.method == "POST":
+            nome = request.form["nome"]
+            email = request.form["email"]
+            telefone = request.form["telefone"]
+            data_nasc = request.form["data_nasc"]
+            senha = request.form["senha"]
+            
+            # ADICIONE ESTAS DUAS LINHAS PARA SALVAR O AVATAR NA SESSÃO DO FLASK
+            avatar_escolhido = request.form.get("avatar", "🐧")
+            session["user_avatar"] = avatar_escolhido
+            
+            cursor.execute("""
+                UPDATE tbl_usuarios 
+                SET nome_usuario=%s, email_usuario=%s, telefone_usuario=%s, 
+                    dt_nasc_usuario=%s, senha_usuario=%s 
+                WHERE id_usuario=%s
+            """, (nome, email, telefone, data_nasc, senha, session["id_usuario"]))
+            conexao.commit()
+            
+            session["nome_usuario"] = nome
+            flash("Perfil atualizado com sucesso!", "success")
+            return redirect("/perfil")
+        
+        # GET: Busca os dados atuais
+        cursor.execute("SELECT * FROM tbl_usuarios WHERE id_usuario = %s", (session["id_usuario"],))
+        usuario = cursor.fetchone()
+        
+        return render_template("perfil.html", usuario=usuario, nome_usuario=session.get("nome_usuario"))
+        
+    except Exception as e:
+        print(f"Erro ao carregar/editar perfil: {e}")
+        flash("Erro interno ao processar seu perfil.", "danger")
+        return redirect("/aluno")
+    finally:
+        if cursor: cursor.close()
+        if conexao: conexao.close()
 
 if __name__ == "__main__":
     app.run(debug=True)
