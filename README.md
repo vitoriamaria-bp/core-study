@@ -1,34 +1,52 @@
-<p align="center">
-  <h1 align="center">🐧 Core Study</h1>
-  <p align="center">Sistema de gestão educacional robusto, focado em organização, segurança e performance.</p>
-</p>
+# 🎓 Core Study - Plataforma EAD (MVP)
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
-  <img src="https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white" />
-  <img src="https://img.shields.io/badge/MySQL_Workbench-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
-</p>
+O **Core Study** é um Produto Mínimo Viável (MVP) de uma plataforma educacional desenvolvida como projeto acadêmico. O sistema centraliza conteúdos didáticos, facilitando a organização, distribuição e o consumo de materiais educacionais.
 
----
+## 👥 Equipe de Desenvolvimento
 
-## 📖 Sobre o Projeto
-O **Core Study** é uma plataforma desenvolvida para gerir o ciclo de vida acadêmico. Com uma arquitetura modular, o sistema separa responsabilidades entre administrador e aluno, garantindo que a integridade dos dados seja mantida e a experiência do utilizador final seja fluida.
+| Integrante | Perfil GitHub |
+| :--- | :--- |
+| **Vitória Pinheiro** | [@vitoriamaria-bp](https://github.com/vitoriamaria-bp) |
+| **Fabiano Matheus** | [@0Matheus-Silva](https://github.com/0Matheus-Silva) |
+| **Adrian** | [@Adrian-2003](https://github.com/Adrian-2003) |
+| **Guilherme** | [@guilhermepereiramarques1](https://github.com/Guilherme) |
+| **Luiz (shiidw)** | [@shiidw](https://github.com/shiidw) |
 
 ---
 
-## 🛠 Como Configurar no Seu Computador (Local)
+## 🚀 Tecnologias Utilizadas
 
-Para rodar este projeto no seu ambiente local (VS Code + Workbench), siga estes passos:
+O projeto foi construído sob uma arquitetura Fullstack Monolítica, utilizando:
 
-### 1. Preparação do Banco de Dados
-1. Abra o **MySQL Workbench**.
-2. Crie uma nova conexão e execute o script `Banco de dados Core Study.sql` contido na raiz do projeto.
-3. Certifique-se de que o banco `db_core_study1` foi criado com sucesso.
+* **Linguagem Principal:** Python 3.x
+* **Framework Web:** Flask (com Jinja2 e Flask-Session)
+* **Banco de Dados:** MySQL (Relacional)
+* **Front-end:** HTML5, CSS3, JavaScript (Vanilla)
+* **Gestão e Versionamento:** Git, GitHub, Trello e Miro (Metodologias Ágeis)
 
-### 2. Preparação do Ambiente Python
-1. Certifique-se de ter o Python instalado.
-2. Abra a pasta do projeto no **VS Code**.
-3. No terminal do VS Code, instale a dependência necessária:
-   ```bash
-   pip install mysql-connector-python
+---
+
+## ⚙️ Funcionalidades e Arquitetura
+
+O sistema é segmentado em dois painéis distintos com rotas protegidas por verificação de sessão.
+
+### 🛡️ Módulo Administrativo (Admin)
+Painel restrito com operações de **CRUD** (Create, Read, Update, Delete) completas para:
+* **Usuários:** Gestão de níveis de acesso.
+* **Categorias e Cursos:** Estruturação temática.
+* **Conteúdo:** Cadastro hierárquico (Módulos > Aulas > Materiais).
+
+### 📚 Módulo do Aluno (View)
+Ambiente de consumo focado na experiência do usuário:
+* **Catálogo:** Listagem dinâmica de cursos.
+* **Trilha de Aprendizagem:** Visualização em "Sanfona" (Accordion) via JavaScript.
+* **Perfil:** Gestão de dados pessoais.
+
+---
+
+## 🔧 Como Executar o Projeto
+
+1. **Configuração do Banco:** Importe o script `Banco de dados Core Study.sql` no seu servidor MySQL local ou via Codespace.
+2. **Dependências:** No diretório raiz, instale os pacotes:
+```bash
+   pip install flask flask-session mysql-connector-python
