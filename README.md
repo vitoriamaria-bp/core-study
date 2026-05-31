@@ -1,4 +1,4 @@
-# 🎓 Core Study - Plataforma EAD (MVP)
+# 🎓 Core Study
 
 O **Core Study** é um Produto Mínimo Viável (MVP) de uma plataforma educacional desenvolvida como projeto acadêmico. O sistema centraliza conteúdos didáticos, facilitando a organização, distribuição e o consumo de materiais educacionais.
 
