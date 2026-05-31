@@ -9,7 +9,7 @@ O **Core Study** é um Produto Mínimo Viável (MVP) de uma plataforma educacion
 | **Vitória Pinheiro** | [@vitoriamaria-bp](https://github.com/vitoriamaria-bp) |
 | **Fabiano Matheus** | [@0Matheus-Silva](https://github.com/0Matheus-Silva) |
 | **Adrian** | [@Adrian-2003](https://github.com/Adrian-2003) |
-| **Guilherme** | [@guilhermepereiramarques1](https://github.com/Guilherme) |
+| **Guilherme** | [@Guilherme](https://github.com/Guilhermepereiramarques) |
 | **Luiz (shiidw)** | [@shiidw](https://github.com/shiidw) |
 
 ---
