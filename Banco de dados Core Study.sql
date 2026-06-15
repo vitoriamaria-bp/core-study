@@ -1,9 +1,3 @@
--- Banco de dados Core Study - base limpa de apresentação
--- Execute este arquivo em um MySQL vazio pelo MySQL Workbench.
--- Login aluno: teste@gmail.com / 12345678
--- Login administrador do sistema: admin / admin
--- Progresso, tentativas, respostas e certificados começam vazios para demonstração ao vivo.
-
 CREATE DATABASE db_core_study1 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE db_core_study1;
 
