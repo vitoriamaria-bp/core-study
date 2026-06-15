@@ -1,231 +1,231 @@
-# 🎓 Core Study
+# Core Study
 
 <p align="center">
-  <h3 align="center">Plataforma Educacional EAD</h3>
-  <p align="center">
-    Sistema desenvolvido para gerenciamento, organização e distribuição de conteúdos educacionais digitais.
-  </p>
+  <strong>Plataforma educacional EAD com cursos, trilhas, progresso, questionários e certificados.</strong>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
   <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" />
-  <img src="https://img.shields.io/badge/Scrum-6DB33F?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Kanban-0052CC?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Trello-0052CC?style=for-the-badge&logo=trello&logoColor=white" />
-  <img src="https://img.shields.io/badge/Miro-050038?style=for-the-badge&logo=miro&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
 </p>
 
-<p align="center">
-  🔗 Repositório Oficial
-  <br>
-  https://github.com/vitoriamaria-bp/core-study
-</p>
+---
+
+## Sobre
+
+O **Core Study** é uma plataforma educacional desenvolvida em **Flask + MySQL** para organizar cursos, módulos, aulas em vídeo, materiais de apoio, avaliações e certificados.
+
+O sistema possui duas áreas principais:
+
+- **Área do aluno**, com catálogo de cursos, trilha de aprendizagem, progresso, aulas, materiais, questionários e certificados.
+- **Área administrativa**, com gerenciamento de usuários, categorias, cursos, módulos, aulas, materiais e questionários.
+
+O projeto foi preparado para apresentação com uma base educacional pronta, incluindo uma trilha completa de **Introdução à Inteligência Artificial**.
 
 ---
 
-## 📖 Sobre o Projeto
+## Funcionalidades
 
-O **Core Study** é um **Produto Mínimo Viável (MVP)** desenvolvido como Projeto Semestral da **UNIFECAF**.
+### Aluno
 
-A plataforma foi criada para centralizar conteúdos educacionais em um único ambiente, permitindo que administradores organizem cursos, módulos, aulas e materiais de apoio, enquanto os alunos acessam os conteúdos por meio de uma interface simples, organizada e intuitiva.
+- Cadastro e login de aluno.
+- Idade mínima de 16 anos para acessar a plataforma.
+- E-mail único por usuário.
+- Catálogo de cursos.
+- Página de curso com módulos, aulas e progresso.
+- Player de vídeo por aula.
+- Navegação entre aulas.
+- Materiais de apoio via Google Drive.
+- Marcar aula como concluída ou pendente.
+- Questionários por módulo.
+- Prova final do curso.
+- Revisão de respostas com alternativa correta, resposta marcada e explicação.
+- Certificado liberado após cumprir os requisitos.
+- Tela de meus cursos.
+- Tela de meus certificados.
+- Edição e exclusão de perfil.
 
-Durante o desenvolvimento foram aplicados conceitos de programação backend com Python, modelagem e implementação de banco de dados MySQL, além da utilização de metodologias ágeis para planejamento, acompanhamento e organização das atividades da equipe.
+### Administrador
 
----
-
-## 👨‍💻 Equipe de Desenvolvimento
-
-| Integrante       | GitHub                                     |
-| ---------------- | ------------------------------------------ |
-| Vitória Maria    | https://github.com/vitoriamaria-bp         |
-| Fabiano Matheus  | https://github.com/0Matheus-Silva          |
-| Adrian           | https://github.com/Adrian-2003             |
-| Guilherme        | https://github.com/Guilhermepereiramarques |
-| Luiz             | https://github.com/shiidw                  |
-
----
-
-## 🚀 Tecnologias Utilizadas
-
-### Desenvolvimento
-
-* Python
-* Flask
-* MySQL
-* HTML5
-* CSS3
-* JavaScript
-
-### Metodologias Ágeis
-
-* Scrum
-* Kanban
-
-### Gestão e Planejamento
-
-* Trello
-* Miro
+- Login administrativo.
+- CRUD de usuários.
+- CRUD de categorias.
+- CRUD de cursos.
+- CRUD de módulos.
+- CRUD de aulas.
+- CRUD de materiais.
+- CRUD de questionários e perguntas.
+- Filtros e pesquisa nas telas administrativas.
 
 ---
 
-## 🏗️ Arquitetura do Sistema
+## Banco de dados
 
-O sistema utiliza autenticação baseada em sessões e está dividido em dois módulos principais.
-
-### 🛡️ Painel Administrativo
-
-Área restrita destinada ao gerenciamento completo da plataforma.
-
-#### Funcionalidades
-
-* Gestão de usuários
-* Controle de níveis de acesso
-* Cadastro de categorias
-* Cadastro de cursos
-* Organização de módulos
-* Cadastro de aulas
-* Gerenciamento de materiais de apoio
-* Estruturação hierárquica dos conteúdos
-* Edição de Perfil
-
----
-
-### 📚 Painel do Aluno
-
-Ambiente desenvolvido para o consumo dos conteúdos educacionais.
-
-#### Funcionalidades
-
-* Catálogo de cursos
-* Visualização de conteúdos
-* Trilha de aprendizagem
-* Navegação em Accordion (Sanfona)
-* Gerenciamento de perfil
-* Acesso a materiais complementares
-
----
-
-## 📂 Estrutura dos Conteúdos
+O banco principal é:
 
 ```text
-Curso
- ├── Módulo
- │    ├── Aula
- │    │    ├── Vídeo
- │    │    ├── PDF
- │    │    └── Material Complementar
+db_core_study1
+```
+
+O arquivo [Banco de dados Core Study.sql](./Banco%20de%20dados%20Core%20Study.sql) cria a estrutura completa e popula os dados fixos para apresentação.
+
+Ele já inclui:
+
+- 8 categorias;
+- 16 cursos;
+- 32 módulos;
+- 63 aulas;
+- 3 materiais de apoio;
+- 48 questionários;
+- 140 questões;
+- 470 alternativas;
+- 1 usuário aluno de teste.
+
+As tabelas de progresso começam vazias para permitir demonstração em tempo real:
+
+- `tbl_aulas_concluidas`
+- `tbl_cursos_iniciados`
+- `tbl_tentativas_questionario`
+- `tbl_respostas_questionario`
+- `tbl_respostas_tentativa`
+- `tbl_certificados`
+
+---
+
+## Destaque: Trilha de Inteligência Artificial
+
+O curso **Introdução à Inteligência Artificial** está preparado para demonstração completa:
+
+- 2 módulos;
+- 4 aulas com vídeos;
+- 3 materiais do Google Drive;
+- 2 questionários de módulo;
+- 1 prova final;
+- 50 questões relacionadas ao conteúdo.
+
+Vídeos cadastrados:
+
+```text
+Módulo 1 / Aula 1: https://www.youtube.com/watch?v=p33lQqS1PnY
+Módulo 1 / Aula 2: https://www.youtube.com/watch?v=2vRUdnQ1X74
+Módulo 2 / Aula 1: https://www.youtube.com/watch?v=Cn6QS3BNP3g
+Módulo 2 / Aula 2: https://www.youtube.com/watch?v=dwQqK2sqbDc
+```
+
+Materiais de apoio:
+
+```text
+https://drive.google.com/drive/folders/1dlcTYJG3nuSXJ0cOhn2qeVDTmUf5zv4I?usp=sharing
 ```
 
 ---
 
-## ⚙️ Preparação do Ambiente
+## Tecnologias
 
-Antes de executar o projeto, certifique-se de possuir os seguintes requisitos instalados:
+- Python
+- Flask
+- MySQL
+- mysql-connector-python
+- Gunicorn
+- HTML
+- CSS
+- JavaScript
 
-### Requisitos
+---
 
-* Python 3.10 ou superior
-* MySQL Server 8.0 ou superior
-* Git
+## Como rodar localmente
 
-Verifique as versões instaladas:
+### 1. Clonar o repositório
 
 ```bash
-python --version
-mysql --version
-git --version
+git clone https://github.com/vitoriamaria-bp/testandosript.git
+cd testandosript
 ```
 
----
-
-## 🚀 Instalação e Execução
-
-### 1️⃣ Clonar o Repositório
+### 2. Criar ambiente virtual
 
 ```bash
-git clone https://github.com/vitoriamaria-bp/core-study.git
-
-Para versão com Front End
-cd CoreStudy
-
-ou
-
-Para Back End no Terminal
-cd CoreStudy_BackEnd
+python -m venv .venv
 ```
 
----
-
-### 2️⃣ Instalar Dependências
+No Windows:
 
 ```bash
-pip install flask flask-session mysql-connector-python
+.venv\Scripts\activate
 ```
 
----
-
-### 3️⃣ Instalar e Iniciar o MySQL
-
-Linux / GitHub Codespaces:
+No Linux/macOS:
 
 ```bash
-sudo apt-get update
-
-sudo apt-get install mysql-server -y
-
-sudo service mysql start
+source .venv/bin/activate
 ```
 
----
+### 3. Instalar dependências
 
-### 4️⃣ Importar o Banco de Dados
+```bash
+pip install -r requirements.txt
+```
 
-Execute o comando abaixo para criar toda a estrutura do banco:
+### 4. Criar o banco no MySQL
+
+Abra o MySQL Workbench, conecte no seu servidor MySQL e execute o arquivo:
+
+```text
+Banco de dados Core Study.sql
+```
+
+Ou pelo terminal:
 
 ```bash
 mysql -u root -p < "Banco de dados Core Study.sql"
 ```
 
----
+### 5. Configurar variáveis de ambiente
 
-### 5️⃣ Configurar a Conexão
-
-Verifique se as credenciais definidas no arquivo:
+O projeto funciona localmente com os padrões:
 
 ```text
-conexao.py
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=root
+DB_NAME=db_core_study1
 ```
 
-correspondem às credenciais configuradas em seu servidor MySQL.
+Se seu MySQL usar outra senha ou usuário, configure as variáveis antes de rodar.
 
----
-
-### 6️⃣ Popular o Banco de Dados
-
-Após configurar a conexão, execute:
+Exemplo Linux/macOS:
 
 ```bash
-python gerar_inserts.py
-
-sudo mysql -u root -p db_core_study1 < inserts_dados.sql
+export DB_HOST=localhost
+export DB_PORT=3306
+export DB_USER=root
+export DB_PASSWORD=sua_senha
+export DB_NAME=db_core_study1
 ```
 
-Esse script será responsável por inserir os dados iniciais utilizados pela plataforma.
+Exemplo Windows PowerShell:
 
----
+```powershell
+$env:DB_HOST="localhost"
+$env:DB_PORT="3306"
+$env:DB_USER="root"
+$env:DB_PASSWORD="sua_senha"
+$env:DB_NAME="db_core_study1"
+```
 
-### 7️⃣ Executar a Aplicação
+### 6. Rodar a aplicação
 
 ```bash
+cd CoreStudy
 python app.py
 ```
 
-A aplicação estará disponível em:
+Acesse:
 
 ```text
 http://127.0.0.1:5000
@@ -233,42 +233,94 @@ http://127.0.0.1:5000
 
 ---
 
-## 🎯 Objetivos Acadêmicos
+## Como demonstrar salvamento no banco
 
-Este projeto foi desenvolvido com o propósito de aplicar conhecimentos relacionados a:
+Enquanto testa o site, rode consultas no MySQL Workbench:
 
-* Programação Backend com Python
-* Desenvolvimento de aplicações utilizando Flask
-* Modelagem de Banco de Dados Relacional
-* Implementação de Banco de Dados MySQL
-* Operações CRUD
-* Controle de Sessões e Autenticação
-* Levantamento e organização de requisitos
-* Metodologias Ágeis
-* Planejamento e acompanhamento de atividades
-* Trabalho em equipe
-* Desenvolvimento colaborativo de software
+```sql
+USE db_core_study1;
 
----
+SELECT * FROM tbl_usuarios;
+SELECT * FROM tbl_cursos_iniciados;
+SELECT * FROM tbl_aulas_concluidas;
+SELECT * FROM tbl_tentativas_questionario;
+SELECT * FROM tbl_respostas_questionario;
+SELECT * FROM tbl_certificados;
+```
 
-## 📄 Licença
+Fluxo recomendado:
 
-Projeto desenvolvido exclusivamente para fins acadêmicos e educacionais.
-
----
-
-## 🎓 Projeto Acadêmico
-
-O **Core Study** foi desenvolvido como Projeto Semestral da **UNIFECAF**, permitindo a aplicação prática dos conhecimentos adquiridos durante a graduação, desde a modelagem do banco de dados até a implementação completa da aplicação.
-
-Além do desenvolvimento técnico, o projeto envolveu planejamento, organização de tarefas e acompanhamento da equipe utilizando metodologias ágeis e ferramentas amplamente utilizadas no mercado de tecnologia.
-
-A equipe recomenda conhecer a instituição responsável pela formação e incentivo ao desenvolvimento deste projeto:
-
-🔗 https://www.unifecaf.com.br
+1. Entrar como aluno.
+2. Abrir o curso de Inteligência Artificial.
+3. Marcar aulas como concluídas.
+4. Responder questionários.
+5. Gerar certificado.
+6. Atualizar as consultas no Workbench para mostrar os registros aparecendo.
 
 ---
 
-<p align="center">
-  Desenvolvido com dedicação pela equipe Core Study ❤️
-</p>
+## Deploy
+
+O projeto já está preparado para hospedagem com:
+
+- `requirements.txt`
+- `Procfile`
+- `.env.example`
+- `DEPLOY.md`
+
+Comando de produção:
+
+```bash
+gunicorn --chdir CoreStudy app:app
+```
+
+Variáveis necessárias:
+
+```env
+DB_HOST=host-do-mysql
+DB_PORT=3306
+DB_USER=usuario-do-mysql
+DB_PASSWORD=senha-do-mysql
+DB_NAME=db_core_study1
+SECRET_KEY=uma-chave-secreta-grande
+FLASK_DEBUG=0
+```
+
+Para instruções detalhadas, veja [DEPLOY.md](./DEPLOY.md).
+
+---
+
+## Estrutura
+
+```text
+testandosript/
+├── Banco de dados Core Study.sql
+├── CoreStudy/
+│   ├── app.py
+│   ├── conexao.py
+│   ├── static/
+│   └── templates/
+├── CoreStudy_BackEnd/
+├── DEPLOY.md
+├── Procfile
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Equipe
+
+| Integrante | GitHub |
+| --- | --- |
+| Vitória Maria | https://github.com/vitoriamaria-bp |
+| Fabiano Matheus | https://github.com/0Matheus-Silva |
+| Adrian | https://github.com/Adrian-2003 |
+| Guilherme | https://github.com/Guilhermepereiramarques |
+| Luiz | https://github.com/shiidw |
+
+---
+
+## Finalidade
+
+Projeto desenvolvido para fins acadêmicos e educacionais.
