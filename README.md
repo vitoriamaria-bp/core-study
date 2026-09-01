@@ -5,12 +5,12 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" />
-  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+  <img src="https://img.shields.io/badge/Python-0F172A?style=flat-square&logo=python&logoColor=00C2D1" />
+  <img src="https://img.shields.io/badge/Flask-0F172A?style=flat-square&logo=flask&logoColor=E8EDF5" />
+  <img src="https://img.shields.io/badge/MySQL-0F172A?style=flat-square&logo=mysql&logoColor=FF7A30" />
+  <img src="https://img.shields.io/badge/HTML5-0F172A?style=flat-square&logo=html5&logoColor=FF7A30" />
+  <img src="https://img.shields.io/badge/CSS3-0F172A?style=flat-square&logo=css3&logoColor=00C2D1" />
+  <img src="https://img.shields.io/badge/JavaScript-0F172A?style=flat-square&logo=javascript&logoColor=F7DF1E" />
 </p>
 
 ---
@@ -25,6 +25,16 @@ O sistema possui duas áreas principais:
 - **Área administrativa**, com gerenciamento de usuários, categorias, cursos, módulos, aulas, materiais e questionários.
 
 O projeto foi preparado para apresentação com uma base educacional pronta, incluindo uma trilha completa de **Introdução à Inteligência Artificial**.
+
+---
+
+## Origem e evolução
+
+A primeira versão do Core Study foi desenvolvida em equipe como projeto acadêmico e executada pelo terminal. Nessa etapa, **Vitória Maria participou da modelagem conceitual do banco de dados e da reorganização da navegação em menus e submenus**.
+
+Posteriormente, Vitória continuou individualmente a evolução da base original para uma aplicação Web, ampliando a interface e as funcionalidades com Flask, MySQL, HTML, CSS e JavaScript.
+
+Esta distinção registra com clareza o trabalho coletivo da versão inicial e a continuidade individual realizada depois.
 
 ---
 
@@ -142,8 +152,8 @@ https://drive.google.com/drive/folders/1dlcTYJG3nuSXJ0cOhn2qeVDTmUf5zv4I?usp=sha
 ### 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/vitoriamaria-bp/testandosript.git
-cd testandosript
+git clone https://github.com/vitoriamaria-bp/core-study.git
+cd core-study
 ```
 
 ### 2. Criar ambiente virtual
@@ -293,7 +303,7 @@ Para instruções detalhadas, veja [DEPLOY.md](./DEPLOY.md).
 ## Estrutura
 
 ```text
-testandosript/
+core-study/
 ├── Banco de dados Core Study.sql
 ├── CoreStudy/
 │   ├── app.py
@@ -306,6 +316,14 @@ testandosript/
 ├── requirements.txt
 └── README.md
 ```
+
+---
+
+## IA no processo de desenvolvimento
+
+Na evolução individual para Web, ferramentas de inteligência artificial foram utilizadas como apoio intensivo à implementação de funcionalidades, construção da interface, investigação de erros e refinamentos.
+
+O projeto também faz parte do processo de aprendizagem da autora, que busca compreender, testar e explicar as soluções implementadas e aumentar gradualmente sua autonomia técnica.
 
 ---
 
